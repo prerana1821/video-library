@@ -1,17 +1,5 @@
 export const data = [
   {
-    id: "sBH-ngpL0zo",
-    url: "https://www.youtube.com/embed/sBH-ngpL0zo?mute=0",
-    name: "Gaur Gopal Das​ On His Life Lessons And Spirituality",
-    date: "Mar 13, 2020",
-  },
-  {
-    id: "eavpj-z5Y4Q",
-    url: "https://www.youtube.com/embed/eavpj-z5Y4Q?mute=0",
-    name: "Priyanka Chopra On Mental Health, Goals & Motivation",
-    date: "Oct 8, 2019",
-  },
-  {
     id: "WylKHt5SuMI",
     url: "https://www.youtube.com/embed/WylKHt5SuMI?mute=0",
     name:
@@ -26,19 +14,6 @@ export const data = [
     date: "Nov 7, 2019",
   },
   {
-    id: "64z0focMWqI",
-    url: "https://www.youtube.com/embed/64z0focMWqI?mute=0",
-    name: "Rajkummar Rao On Initial Struggle, Career Hacks",
-    date: "Nov 7, 2019",
-  },
-  {
-    id: "QLUxKjPx0KU",
-    url: "https://www.youtube.com/embed/QLUxKjPx0KU?mute=0",
-    name:
-      "Shilpa Shetty Kundra​'s Secrets To A Rich, Spiritual & Peaceful Life",
-    date: "Nov 29, 2019",
-  },
-  {
     id: "2UDczkt_vaI",
     url: "https://www.youtube.com/embed/2UDczkt_vaI?mute=0",
     name: "Tanmay Bhat​ On His Comeback, Weight Loss, AIB & Finance",
@@ -51,10 +26,23 @@ export const data = [
     date: "Oct 28, 2019",
   },
   {
-    id: "klMP7sMFtDw",
-    url: "https://www.youtube.com/embed/klMP7sMFtDw?mute=0",
-    name: "Tamannaah Bhatia On Relationships, Career Growth Mentality",
-    date: "Oct 23, 2020",
+    id: "sBH-ngpL0zo",
+    url: "https://www.youtube.com/embed/sBH-ngpL0zo?mute=0",
+    name: "Gaur Gopal Das​ On His Life Lessons And Spirituality",
+    date: "Mar 13, 2020",
+  },
+  {
+    id: "eavpj-z5Y4Q",
+    url: "https://www.youtube.com/embed/eavpj-z5Y4Q?mute=0",
+    name: "Priyanka Chopra On Mental Health, Goals & Motivation",
+    date: "Oct 8, 2019",
+  },
+
+  {
+    id: "64z0focMWqI",
+    url: "https://www.youtube.com/embed/64z0focMWqI?mute=0",
+    name: "Rajkummar Rao On Initial Struggle, Career Hacks",
+    date: "Nov 7, 2019",
   },
   {
     id: "AUrXa4GFTMk",
@@ -73,5 +61,18 @@ export const data = [
     url: "https://www.youtube.com/embed/mddai-lDoHA?mute=0",
     name: "Vegetarianism, Masturbation, NoFap And Porn Addiction",
     date: "Aug 2, 2019",
+  },
+  {
+    id: "QLUxKjPx0KU",
+    url: "https://www.youtube.com/embed/QLUxKjPx0KU?mute=0",
+    name:
+      "Shilpa Shetty Kundra​'s Secrets To A Rich, Spiritual & Peaceful Life",
+    date: "Nov 29, 2019",
+  },
+  {
+    id: "klMP7sMFtDw",
+    url: "https://www.youtube.com/embed/klMP7sMFtDw?mute=0",
+    name: "Tamannaah Bhatia On Relationships, Career Growth Mentality",
+    date: "Oct 23, 2020",
   },
 ];

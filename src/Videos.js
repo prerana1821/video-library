@@ -2,7 +2,7 @@ import { useData } from "./DataProvider";
 import { useLikeSave } from "./Like&SaveProvider";
 
 export const Videos = () => {
-  const { state } = useData();
+  const { latestData } = useData();
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
 
   const likeUnLike = (item) => {
@@ -20,7 +20,7 @@ export const Videos = () => {
   return (
     <div>
       <h2>Videos</h2>
-      {state.map((video) => {
+      {latestData.map((video) => {
         return (
           <div key={video.id}>
             <iframe
@@ -30,6 +30,7 @@ export const Videos = () => {
               src={video.url}
             ></iframe>
             <h4>{video.name}</h4>
+            <p>{video.date}</p>
             <button
               onClick={() => {
                 likeSaveState.likedVideos.reduce((acc, value) => {
