@@ -1,7 +1,7 @@
 import { useLikeSave } from "./Like&SaveProvider";
 
 export const SavedVideos = () => {
-  const { likeSaveState } = useLikeSave();
+  const { likeSaveState, likeSaveDispatch } = useLikeSave();
 
   return (
     <div>
@@ -17,11 +17,11 @@ export const SavedVideos = () => {
             ></iframe>
             <h4>{video.name}</h4>
             <button
-            // onClick={() =>
-            //   likeSaveDispatch({ type: "LIKE_VIDEO", payload: video })
-            // }
+              onClick={() =>
+                likeSaveDispatch({ type: "UNSAVE_VIDEO", payload: video })
+              }
             >
-              Remove
+              Remove from Watch Later
             </button>
           </div>
         );

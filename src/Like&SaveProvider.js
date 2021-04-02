@@ -10,10 +10,24 @@ export const LikeSaveProvider = ({ children }) => {
           ...state,
           likedVideos: state.likedVideos.concat(action.payload),
         };
+      case "UNLIKE_VIDEO":
+        return {
+          ...state,
+          likedVideos: state.likedVideos.filter((item) => {
+            return item.id !== action.payload.id;
+          }),
+        };
       case "SAVE_VIDEO":
         return {
           ...state,
           savedVideos: state.savedVideos.concat(action.payload),
+        };
+      case "UNSAVE_VIDEO":
+        return {
+          ...state,
+          savedVideos: state.savedVideos.filter((item) => {
+            return item.id !== action.payload.id;
+          }),
         };
       default:
         console.log("Something went wrong");

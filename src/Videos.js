@@ -3,7 +3,20 @@ import { useLikeSave } from "./Like&SaveProvider";
 
 export const Videos = () => {
   const { state } = useData();
-  const { likeSaveDispatch } = useLikeSave();
+  const { likeSaveState, likeSaveDispatch } = useLikeSave();
+
+  const likeUnLike = (item) => {
+    return likeSaveState.likedVideos.reduce((acc, value) => {
+      return value.id === item.id ? "Unlike" : acc;
+    }, "Like");
+  };
+
+  const saveUnSave = (item) => {
+    return likeSaveState.savedVideos.reduce((acc, value) => {
+      return value.id === item.id ? "Remove from Watch Later" : acc;
+    }, "Watch Later");
+  };
+
   return (
     <div>
       <h2>Videos</h2>
@@ -18,18 +31,26 @@ export const Videos = () => {
             ></iframe>
             <h4>{video.name}</h4>
             <button
-              onClick={() =>
-                likeSaveDispatch({ type: "LIKE_VIDEO", payload: video })
-              }
+              onClick={() => {
+                likeSaveState.likedVideos.reduce((acc, value) => {
+                  return value.id === video.id
+                    ? likeSaveDispatch({ type: "UNLIKE_VIDEO", payload: video })
+                    : acc;
+                }, likeSaveDispatch({ type: "LIKE_VIDEO", payload: video }));
+              }}
             >
-              Like
+              {likeUnLike(video)}
             </button>
             <button
-              onClick={() =>
-                likeSaveDispatch({ type: "SAVE_VIDEO", payload: video })
-              }
+              onClick={() => {
+                likeSaveState.likedVideos.reduce((acc, value) => {
+                  return value.id === video.id
+                    ? likeSaveDispatch({ type: "UNSAVE_VIDEO", payload: video })
+                    : acc;
+                }, likeSaveDispatch({ type: "SAVE_VIDEO", payload: video }));
+              }}
             >
-              Watch Later
+              {saveUnSave(video)}
             </button>
           </div>
         );
