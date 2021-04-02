@@ -1,10 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import { DataProvider } from "./DataProvider";
+import { LikeSaveProvider } from "./Like&SaveProvider";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <DataProvider>
+      <LikeSaveProvider>
+        <App />
+      </LikeSaveProvider>
+    </DataProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
