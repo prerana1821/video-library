@@ -6,6 +6,8 @@ export const PlayList = () => {
 
   const { playListState, playListDispatch } = usePlayList();
 
+  const playListsArray = Object.keys(playListState);
+
   return (
     <div>
       <h3>PlayLists</h3>
@@ -28,6 +30,27 @@ export const PlayList = () => {
         >
           Save
         </button>
+      </div>
+
+      <div>
+        {playListsArray.map((playList) => {
+          return (
+            <div key={playList}>
+              <h4>{playList}</h4>
+              <button>View PlayList</button>
+              <button
+                onClick={() =>
+                  playListDispatch({
+                    type: "DELETE_PLAYLIST",
+                    payload: playList,
+                  })
+                }
+              >
+                Delete PlayList
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

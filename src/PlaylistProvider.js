@@ -19,6 +19,23 @@ export const PlaylistProvider = ({ children }) => {
           ...state,
           [action.payload]: [],
         };
+      case "DELETE_PLAYLIST":
+        return Object.keys(state).reduce((object, key) => {
+          if (key !== action.payload) {
+            object[key] = state[key];
+          }
+          return object;
+        }, {});
+      //   case "DELETE_PLAYLIST":
+      //     return {
+      //       ...state,
+      //       [action.payload
+      //         .selectedPlayList]: action.payload.selectedPlayList.filter(
+      //         (item) => {
+      //           return item.id !== action.payload.id;
+      //         }
+      //       ),
+      //     };
       default:
         console.log("Something went wrong");
         break;
