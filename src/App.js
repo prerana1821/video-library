@@ -5,6 +5,7 @@ import { SideBar } from "./SideBar";
 import { useState } from "react";
 import { LikedVideos } from "./LikedVideos";
 import { SavedVideos } from "./SavedVideos";
+import { PlayList } from "./PlayList";
 
 function App() {
   const [route, setRoute] = useState("videos");
@@ -14,6 +15,7 @@ function App() {
       <Header />
       <SideBar setRoute={setRoute} />
       {route === "videos" && <Videos />}
+      {route === "playlist" && <PlayList />}
       {route === "likedvideos" && <LikedVideos />}
       {route === "savedvideos" && <SavedVideos />}
     </div>

@@ -3,7 +3,7 @@ import { useData } from "./DataProvider";
 export const SideBar = ({ setRoute }) => {
   const { latestVideos, dispatch } = useData();
 
-  console.log(latestVideos);
+  // console.log(latestVideos);
 
   return (
     <div>
@@ -18,6 +18,7 @@ export const SideBar = ({ setRoute }) => {
           Latest Videos
         </label>
         <button onClick={() => setRoute("videos")}>Videos</button>
+        <button onClick={() => setRoute("playlist")}>My PlayList</button>
         <button onClick={() => setRoute("likedvideos")}>Liked Videos</button>
         <button onClick={() => setRoute("savedvideos")}>Watch Later</button>
       </div>
