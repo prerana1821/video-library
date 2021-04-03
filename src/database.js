@@ -59,7 +59,7 @@ export const data = [
   {
     id: "mddai-lDoHA",
     url: "https://www.youtube.com/embed/mddai-lDoHA?mute=0",
-    name: "Vegetarianism, Masturbation, NoFap And Porn Addiction",
+    name: "Vegetarianism, Masturbation, NoFap And No Addiction",
     date: "Aug 2, 2019",
   },
   {

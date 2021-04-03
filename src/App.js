@@ -13,11 +13,13 @@ function App() {
   return (
     <div className='App'>
       <Header />
-      <SideBar setRoute={setRoute} />
-      {route === "videos" && <Videos />}
-      {route === "playlist" && <PlayList />}
-      {route === "likedvideos" && <LikedVideos />}
-      {route === "savedvideos" && <SavedVideos />}
+      <div className='main'>
+        <SideBar setRoute={setRoute} />
+        {route === "videos" && <Videos />}
+        {route === "playlist" && <PlayList />}
+        {route === "likedvideos" && <LikedVideos />}
+        {route === "savedvideos" && <SavedVideos />}
+      </div>
     </div>
   );
 }

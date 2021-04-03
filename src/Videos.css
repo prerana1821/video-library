@@ -1,0 +1,38 @@
+.videos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  max-width: 480px;
+  text-align: left;
+}
+
+.card > p {
+  font-size: 1rem;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.choose-playlist {
+  flex: 1;
+}
+
+.choose-playlist > select {
+  margin: 0 1rem;
+  padding: 0.3rem;
+  font-size: medium;
+}
+
+.btn-card-actions {
+  cursor: pointer;
+  border: none;
+  margin: 0 1rem;
+  outline: var(--white-color);
+  background: none;
+}
