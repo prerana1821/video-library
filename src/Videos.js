@@ -5,7 +5,7 @@ import { useState } from "react";
 import "./Videos.css";
 
 export const Videos = () => {
-  const { latestData } = useData();
+  const { categoryData } = useData();
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
   const { playListState, playListDispatch } = usePlayList();
 
@@ -30,7 +30,7 @@ export const Videos = () => {
 
   return (
     <div className='videos'>
-      {latestData.map((video) => {
+      {categoryData.map((video) => {
         return (
           <div key={video.id} className='card'>
             <iframe
@@ -41,6 +41,7 @@ export const Videos = () => {
             ></iframe>
             <h4>Name: {video.name}</h4>
             <p>Published Date: {video.date}</p>
+            <p>Category: {video.category}</p>
             <div className='card-actions'>
               <label className='choose-playlist'>
                 Save to Play List:
@@ -75,8 +76,8 @@ export const Videos = () => {
                   }, likeSaveDispatch({ type: "LIKE_VIDEO", payload: video }));
                 }}
               >
-                <div class='avatar av-sm av-pink'>
-                  <i class={likeUnLike(video)}></i>
+                <div className='avatar av-sm av-pink'>
+                  <i className={likeUnLike(video)}></i>
                 </div>
               </button>
               <button
@@ -92,8 +93,8 @@ export const Videos = () => {
                   }, likeSaveDispatch({ type: "SAVE_VIDEO", payload: video }));
                 }}
               >
-                <div class='avatar av-sm av-pink'>
-                  <i class={saveUnSave(video)}></i>
+                <div className='avatar av-sm av-pink'>
+                  <i className={saveUnSave(video)}></i>
                 </div>
               </button>
             </div>
