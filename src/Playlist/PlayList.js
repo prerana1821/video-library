@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { usePlayList } from "./PlaylistProvider";
+import { usePlayList } from "../Context";
 
 export const PlayList = () => {
   const [createPlayList, setCreatePlayList] = useState("");

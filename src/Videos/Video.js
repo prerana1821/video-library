@@ -1,7 +1,5 @@
 import { useParams } from "react-router";
-import { useData } from "./DataProvider";
-import { usePlayList } from "./PlaylistProvider";
-import { useLikeSave } from "./Like&SaveProvider";
+import { useLikeSave, usePlayList, useData } from "../Context";
 import { useState } from "react";
 import "./Video.css";
 

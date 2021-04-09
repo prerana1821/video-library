@@ -1,13 +1,13 @@
-import "./App.css";
+import { Routes, Route } from "react-router-dom";
 import { VideoListing } from "./VideoListing";
 import { Header } from "./Header";
-import { SideBar } from "./SideBar";
+import { SideBar } from "./Sidebar";
 import { LikedVideos } from "./LikedVideos";
 import { SavedVideos } from "./SavedVideos";
-import { PlayList } from "./PlayList";
-import { Routes, Route } from "react-router-dom";
-import { Video } from "./Video";
+import { PlayList } from "./Playlist";
+import { Video } from "./Videos";
 import { History } from "./History";
+import "./App.css";
 
 function App() {
   return (

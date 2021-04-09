@@ -1,5 +1,4 @@
-import { useData } from "./DataProvider";
-import { useLikeSave } from "./Like&SaveProvider";
+import { useLikeSave, useData } from "../Context";
 import { Link } from "react-router-dom";
 import "./VideoListing.css";
 

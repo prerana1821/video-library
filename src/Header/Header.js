@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useData } from "./DataProvider";
+import { useData } from "../Context";
 import "./Header.css";
 
 export const Header = () => {

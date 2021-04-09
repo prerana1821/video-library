@@ -1,10 +1,8 @@
 import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { DataProvider } from "./DataProvider";
-import { LikeSaveProvider } from "./Like&SaveProvider";
-import { PlaylistProvider } from "./PlaylistProvider";
-import { BrowserRouter as Router } from "react-router-dom";
+import { DataProvider, PlaylistProvider, LikeSaveProvider } from "./Context";
 
 ReactDOM.render(
   <React.StrictMode>

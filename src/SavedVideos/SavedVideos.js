@@ -1,12 +1,12 @@
-import { useLikeSave } from "./Like&SaveProvider";
+import { useLikeSave } from "../Context";
 
-export const LikedVideos = () => {
+export const SavedVideos = () => {
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
 
   return (
     <div>
-      <h3>Liked Videos</h3>
-      {likeSaveState.likedVideos.map((video) => {
+      <h3>Saved Videos</h3>
+      {likeSaveState.savedVideos.map((video) => {
         return (
           <div key={video.id}>
             <iframe
@@ -18,10 +18,10 @@ export const LikedVideos = () => {
             <h4>{video.name}</h4>
             <button
               onClick={() =>
-                likeSaveDispatch({ type: "UNLIKE_VIDEO", payload: video })
+                likeSaveDispatch({ type: "UNSAVE_VIDEO", payload: video })
               }
             >
-              unLike
+              Remove from Watch Later
             </button>
           </div>
         );

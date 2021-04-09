@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useData } from "./DataProvider";
+import { useData } from "../Context";
 import "./SideBar.css";
 
 export const SideBar = () => {
