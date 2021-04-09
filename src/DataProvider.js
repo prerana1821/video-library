@@ -9,8 +9,14 @@ export const DataProvider = ({ children }) => {
     switch (action.type) {
       case "VIEW_BY_CATEGORY":
         return { ...state, viewByCategory: action.payload };
+      case "CLEAR_CATEGORY":
+        return { ...state, viewByCategory: "" };
       case "VIEW_LATEST":
         return { ...state, latestVideos: !state.latestVideos };
+      case "SEARCH":
+        return { ...state, searchString: action.payload };
+      case "CLEAR_SEARCH":
+        return { ...state, searchString: "" };
       default:
         console.log("Something went wrong");
         break;
@@ -18,9 +24,13 @@ export const DataProvider = ({ children }) => {
   };
 
   const getCategoryData = (videoList, category) => {
-    return videoList.filter((video) => {
-      return video.category === category;
-    });
+    if (category) {
+      return videoList.filter((video) => {
+        return video.category === category;
+      });
+    } else {
+      return videoList;
+    }
   };
 
   const getLatestData = (videoList, latest) => {
@@ -33,18 +43,35 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-  const [{ latestVideos, viewByCategory }, dispatch] = useReducer(dataReducer, {
-    latestVideos: false,
-    viewByCategory: "Ranveer Show",
-  });
+  const getSearchedData = (videoList, searchString) => {
+    if (searchString) {
+      return videoList.filter((item) => {
+        return item.name.toLowerCase().includes(searchString.toLowerCase());
+      });
+    } else {
+      return videoList;
+    }
+  };
 
-  const latestData = getLatestData(data, latestVideos);
+  const [{ latestVideos, viewByCategory, searchString }, dispatch] = useReducer(
+    dataReducer,
+    {
+      latestVideos: false,
+      viewByCategory: "",
+      searchString: "",
+    }
+  );
+
+  const searchedData = getSearchedData(data, searchString);
+  const latestData = getLatestData(searchedData, latestVideos);
   const categoryData = getCategoryData(latestData, viewByCategory);
 
-  // console.log(categoryData);
+  console.log(categoryData);
 
   return (
-    <DataContext.Provider value={{ data, latestVideos, latestData, dispatch }}>
+    <DataContext.Provider
+      value={{ data, searchString, latestVideos, categoryData, dispatch }}
+    >
       {children}
     </DataContext.Provider>
   );

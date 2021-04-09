@@ -1,14 +1,11 @@
-// import { useData } from "./DataProvider";
+import { useState } from "react";
+import { useData } from "./DataProvider";
 import "./Header.css";
 
 export const Header = () => {
-  // const { data, dispatch } = useData();
-
-  // console.log({ categoryData });
-
-  // const categories = [...new Set(data.map((item) => item.category))];
-
-  // console.log({ categories });
+  const { data, dispatch } = useData();
+  const [inputSearch, setInputSearch] = useState("");
+  const categories = [...new Set(data.map((item) => item.category))];
 
   return (
     <div>
@@ -18,9 +15,16 @@ export const Header = () => {
             type='text'
             className='search-txt'
             required
+            value={inputSearch}
+            onChange={(e) => setInputSearch(e.target.value)}
             placeholder='Search...'
           />
-          <button className='flt-icon'>
+          <button
+            className='flt-icon'
+            onClick={() => {
+              dispatch({ type: "SEARCH", payload: inputSearch });
+            }}
+          >
             <span>
               <i className='fas fa-lg fa-search'></i>
             </span>
@@ -40,14 +44,18 @@ export const Header = () => {
           </div>
         </div>
       </div>
-      {/* <div>
+      <div>
         <ul>
+          <button onClick={() => dispatch({ type: "CLEAR_CATEGORY" })}>
+            All Videos
+          </button>
           {categories.map((category) => {
             return (
               <li
-                onClick={() =>
-                  dispatch({ type: "VIEW_BY_CATEGORY", playload: category })
-                }
+                onClick={() => {
+                  console.log(category);
+                  dispatch({ type: "VIEW_BY_CATEGORY", payload: category });
+                }}
                 key={category}
               >
                 {category}
@@ -55,7 +63,7 @@ export const Header = () => {
             );
           })}
         </ul>
-      </div> */}
+      </div>
     </div>
   );
 };
