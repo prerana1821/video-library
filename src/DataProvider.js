@@ -41,12 +41,10 @@ export const DataProvider = ({ children }) => {
   const latestData = getLatestData(data, latestVideos);
   const categoryData = getCategoryData(latestData, viewByCategory);
 
-  console.log({ categoryData });
+  // console.log(categoryData);
 
   return (
-    <DataContext.Provider
-      value={{ data, latestVideos, categoryData, dispatch }}
-    >
+    <DataContext.Provider value={{ data, latestVideos, latestData, dispatch }}>
       {children}
     </DataContext.Provider>
   );

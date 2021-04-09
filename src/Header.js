@@ -1,14 +1,14 @@
-import { useData } from "./DataProvider";
+// import { useData } from "./DataProvider";
 import "./Header.css";
 
 export const Header = () => {
-  const { data, categoryData, dispatch } = useData();
+  // const { data, dispatch } = useData();
 
   // console.log({ categoryData });
 
-  const categories = [...new Set(data.map((item) => item.category))];
+  // const categories = [...new Set(data.map((item) => item.category))];
 
-  console.log({ categories });
+  // console.log({ categories });
 
   return (
     <div>
@@ -20,9 +20,11 @@ export const Header = () => {
             required
             placeholder='Search...'
           />
-          <span className='flt-icon'>
-            <i className='fas fa-search'></i>
-          </span>
+          <button className='flt-icon'>
+            <span>
+              <i className='fas fa-lg fa-search'></i>
+            </span>
+          </button>
         </div>
         <div className='header-nav'>
           <div className='badge-av'>
@@ -38,7 +40,7 @@ export const Header = () => {
           </div>
         </div>
       </div>
-      <div>
+      {/* <div>
         <ul>
           {categories.map((category) => {
             return (
@@ -53,7 +55,7 @@ export const Header = () => {
             );
           })}
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,24 +1,28 @@
 import "./App.css";
-import { Videos } from "./Videos";
+import { VideoListing } from "./VideoListing";
 import { Header } from "./Header";
 import { SideBar } from "./SideBar";
-import { useState } from "react";
 import { LikedVideos } from "./LikedVideos";
 import { SavedVideos } from "./SavedVideos";
 import { PlayList } from "./PlayList";
+import { Routes, Route } from "react-router-dom";
+import { Video } from "./Video";
+import { History } from "./History";
 
 function App() {
-  const [route, setRoute] = useState("videos");
-
   return (
     <div className='App'>
       <Header />
       <div className='main'>
-        <SideBar setRoute={setRoute} />
-        {route === "videos" && <Videos />}
-        {route === "playlist" && <PlayList />}
-        {route === "likedvideos" && <LikedVideos />}
-        {route === "savedvideos" && <SavedVideos />}
+        <SideBar />
+        <Routes>
+          <Route path='/' element={<VideoListing />}></Route>
+          <Route path='/video/:videoId' element={<Video />}></Route>
+          <Route path='/playlist' element={<PlayList />}></Route>
+          <Route path='/history' element={<History />}></Route>
+          <Route path='/liked-videos' element={<LikedVideos />}></Route>
+          <Route path='/saved-videos' element={<SavedVideos />}></Route>
+        </Routes>
       </div>
     </div>
   );

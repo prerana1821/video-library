@@ -8,7 +8,7 @@ export const SavedVideos = () => {
       <h3>Saved Videos</h3>
       {likeSaveState.savedVideos.map((video) => {
         return (
-          <div className={video.id}>
+          <div key={video.id}>
             <iframe
               width='420'
               height='315'

@@ -36,3 +36,7 @@
   outline: var(--white-color);
   background: none;
 }
+
+.thumbnail {
+  width: 100%;
+}

@@ -29,6 +29,23 @@ export const LikeSaveProvider = ({ children }) => {
             return item.id !== action.payload.id;
           }),
         };
+      case "ADD_TO_HISTORY":
+        return {
+          ...state,
+          history: state.history.concat(action.payload),
+        };
+      case "REMOVE_FROM_HISTORY":
+        return {
+          ...state,
+          history: state.history.filter((item) => {
+            return item.id !== action.payload.id;
+          }),
+        };
+      case "CLEAR_HISTORY":
+        return {
+          ...state,
+          history: state.history.splice(0, state.history.length),
+        };
       default:
         console.log("Something went wrong");
         break;
@@ -38,6 +55,7 @@ export const LikeSaveProvider = ({ children }) => {
   const [likeSaveState, likeSaveDispatch] = useReducer(likeSaveReducer, {
     likedVideos: [],
     savedVideos: [],
+    history: [],
   });
 
   //   console.log(likeSaveState);

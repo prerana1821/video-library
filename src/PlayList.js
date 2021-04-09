@@ -6,6 +6,8 @@ export const PlayList = () => {
 
   const { playListState, playListDispatch } = usePlayList();
 
+  // console.log({ playListState });
+
   const playListsArray = Object.keys(playListState);
 
   return (
@@ -37,7 +39,34 @@ export const PlayList = () => {
           return (
             <div key={playList}>
               <h4>{playList}</h4>
-              <button>View PlayList</button>
+              <div>
+                {playListState[playList].map((video) => {
+                  return (
+                    <div key={video.id}>
+                      <iframe
+                        width='420'
+                        height='315'
+                        title={video.name}
+                        src={video.url}
+                      ></iframe>
+                      <h4>{video.name}</h4>
+                      <button
+                        onClick={() =>
+                          playListDispatch({
+                            type: "DELETE_FROM_PLAYLIST",
+                            payload: {
+                              selectedPlayList: playList,
+                              video,
+                            },
+                          })
+                        }
+                      >
+                        Remove from Playlist
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
               <button
                 onClick={() =>
                   playListDispatch({

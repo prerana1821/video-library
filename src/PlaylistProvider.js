@@ -26,16 +26,19 @@ export const PlaylistProvider = ({ children }) => {
           }
           return object;
         }, {});
-      //   case "DELETE_PLAYLIST":
-      //     return {
-      //       ...state,
-      //       [action.payload
-      //         .selectedPlayList]: action.payload.selectedPlayList.filter(
-      //         (item) => {
-      //           return item.id !== action.payload.id;
-      //         }
-      //       ),
-      //     };
+      case "DELETE_FROM_PLAYLIST":
+        // console.log(action.payload);
+        console.log(action.payload.selectedPlayList);
+        // break;
+        return {
+          ...state,
+          [action.payload
+            .selectedPlayList]: action.payload.selectedPlayList.filter(
+            (item) => {
+              return item.id !== action.payload.video.id;
+            }
+          ),
+        };
       default:
         console.log("Something went wrong");
         break;
@@ -47,7 +50,7 @@ export const PlaylistProvider = ({ children }) => {
     "My Learnings": [],
   });
 
-  console.log(playListState);
+  // console.log(playListState);
 
   return (
     <PlaylistContext.Provider value={{ playListState, playListDispatch }}>

@@ -66,15 +66,6 @@ export const data = [
     category: "Ranveer Show",
   },
   {
-    id: "AUrXa4GFTMk",
-    url: "https://www.youtube.com/embed/AUrXa4GFTMk?mute=0",
-    thumdnail:
-      "https://i.ytimg.com/vi/AUrXa4GFTMk/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBOIabqmeMcIcfH959zcqIXeCUTjQ",
-    name: "Jay Shetty​ On Meditation, Spirituality & How To Think Like A Monk",
-    date: "Sep 26, 2020",
-    category: "Ranveer Show",
-  },
-  {
     id: "Qm1C4hBPu20",
     url: "https://www.youtube.com/embed/Qm1C4hBPu20?mute=0",
     thumbnail:

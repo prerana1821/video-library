@@ -1,24 +1,15 @@
+import { NavLink } from "react-router-dom";
 import { useData } from "./DataProvider";
 import "./SideBar.css";
 
-export const SideBar = ({ setRoute }) => {
+export const SideBar = () => {
   const { latestVideos, dispatch } = useData();
-
-  // console.log(latestVideos);
 
   return (
     <div className='sidebar'>
       <div className='logo'>
         <img src='https://prekit.netlify.app/images/preCodes.png' alt='Logo' />
         <p className='logo-txt'>preTube</p>
-      </div>
-      <div className='profile'>
-        <img
-          className='avatar av-lg'
-          src='https://prekit.netlify.app/images/person-1.jpg'
-          alt='profile-img'
-        />
-        <h3>Siddhi Mejari</h3>
       </div>
       <div className='side-nav'>
         <label className='btn-latest'>
@@ -29,22 +20,31 @@ export const SideBar = ({ setRoute }) => {
           />
           Latest Videos
         </label>
-        <button
-          className='btn-nav'
-          style={{ marginLeft: " -3rem" }}
-          onClick={() => setRoute("videos")}
-        >
-          <i className='fas fa-home'></i>Home
-        </button>
-        <button className='btn-nav' onClick={() => setRoute("playlist")}>
-          <i className='fas fa-folder'></i>My PlayList
-        </button>
-        <button className='btn-nav' onClick={() => setRoute("likedvideos")}>
-          <i className='fas fa-thumbs-up'></i>Liked Videos
-        </button>
-        <button className='btn-nav' onClick={() => setRoute("savedvideos")}>
-          <i className='far fa-clock'></i>Watch Later
-        </button>
+        <NavLink to='/'>
+          <button className='btn-nav' style={{ marginLeft: " -3rem" }}>
+            <i className='fas fa-home'></i>Home
+          </button>
+        </NavLink>
+        <NavLink to='/playlist'>
+          <button className='btn-nav'>
+            <i className='fas fa-folder'></i>My PlayList
+          </button>
+        </NavLink>
+        <NavLink to='/history'>
+          <button className='btn-nav'>
+            <i className='fas fa-history'></i>History
+          </button>
+        </NavLink>
+        <NavLink to='/liked-videos'>
+          <button className='btn-nav'>
+            <i className='fas fa-thumbs-up'></i>Liked Videos
+          </button>
+        </NavLink>
+        <NavLink to='/saved-videos'>
+          <button className='btn-nav'>
+            <i className='far fa-clock'></i>Watch Later
+          </button>
+        </NavLink>
       </div>
     </div>
   );
