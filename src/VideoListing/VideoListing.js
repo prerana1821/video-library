@@ -1,10 +1,12 @@
 import { useLikeSave, useData } from "../Context";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import "./VideoListing.css";
 
 export const VideoListing = () => {
-  const { categoryData, searchString, dispatch } = useData();
+  const { latestVideos, categoryData, searchString, dispatch } = useData();
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
+  const [inputSearch, setInputSearch] = useState("");
 
   const saveUnSave = (item) => {
     return likeSaveState.savedVideos.reduce((acc, value) => {
@@ -14,11 +16,46 @@ export const VideoListing = () => {
 
   return (
     <div>
-      {searchString && (
-        <button onClick={() => dispatch({ type: "CLEAR_SEARCH" })}>
-          Clear Search
-        </button>
-      )}
+      <div className='filters'>
+        <label className='btn-latest'>
+          <input
+            type='checkbox'
+            checked={latestVideos}
+            onChange={() => dispatch({ type: "VIEW_LATEST" })}
+          />
+          Latest Videos
+        </label>
+        <div className='search'>
+          <div className='search-input'>
+            <input
+              type='text'
+              className='search-txt'
+              required
+              value={inputSearch}
+              onChange={(e) => setInputSearch(e.target.value)}
+              placeholder='Search...'
+            />
+            <button
+              className='flt-icon'
+              onClick={() => {
+                dispatch({ type: "SEARCH", payload: inputSearch });
+              }}
+            >
+              <span>
+                <i className='fas fa-lg fa-search'></i>
+              </span>
+            </button>
+          </div>
+          {searchString && (
+            <button
+              className='btn sec-pink clr-search'
+              onClick={() => dispatch({ type: "CLEAR_SEARCH" })}
+            >
+              Clear Search
+            </button>
+          )}
+        </div>
+      </div>
       <div className='videos'>
         {categoryData.map((video) => {
           return (
@@ -36,8 +73,8 @@ export const VideoListing = () => {
                   alt={video.name}
                 />
                 <h4>Name: {video.name}</h4>
-                <p>Published Date: {video.date}</p>
                 <div className='card-actions'>
+                  <p>Published Date: {video.date}</p>
                   <button
                     className='btn-card-actions'
                     onClick={(e) => {

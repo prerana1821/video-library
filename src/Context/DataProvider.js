@@ -65,8 +65,6 @@ export const DataProvider = ({ children }) => {
   const latestData = getLatestData(searchedData, latestVideos);
   const categoryData = getCategoryData(latestData, viewByCategory);
 
-  console.log(categoryData);
-
   return (
     <DataContext.Provider
       value={{ data, searchString, latestVideos, categoryData, dispatch }}
