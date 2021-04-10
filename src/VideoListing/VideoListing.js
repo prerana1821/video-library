@@ -1,12 +1,12 @@
 import { useLikeSave, useData } from "../Context";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import "./VideoListing.css";
 
 export const VideoListing = () => {
-  const { latestVideos, categoryData, searchString, dispatch } = useData();
+  const { data, latestVideos, categoryData, dispatch } = useData();
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
-  const [inputSearch, setInputSearch] = useState("");
+
+  const categories = [...new Set(data.map((item) => item.category))];
 
   const saveUnSave = (item) => {
     return likeSaveState.savedVideos.reduce((acc, value) => {
@@ -17,6 +17,30 @@ export const VideoListing = () => {
   return (
     <div>
       <div className='filters'>
+        <div>
+          <ul className='categories'>
+            <button
+              className='category'
+              onClick={() => dispatch({ type: "CLEAR_CATEGORY" })}
+            >
+              <li>All Videos</li>
+            </button>
+            {categories.map((category) => {
+              return (
+                <li
+                  className='category'
+                  onClick={() => {
+                    console.log(category);
+                    dispatch({ type: "VIEW_BY_CATEGORY", payload: category });
+                  }}
+                  key={category}
+                >
+                  {category}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
         <label className='btn-latest'>
           <input
             type='checkbox'
@@ -25,36 +49,6 @@ export const VideoListing = () => {
           />
           Latest Videos
         </label>
-        <div className='search'>
-          <div className='search-input'>
-            <input
-              type='text'
-              className='search-txt'
-              required
-              value={inputSearch}
-              onChange={(e) => setInputSearch(e.target.value)}
-              placeholder='Search...'
-            />
-            <button
-              className='flt-icon'
-              onClick={() => {
-                dispatch({ type: "SEARCH", payload: inputSearch });
-              }}
-            >
-              <span>
-                <i className='fas fa-lg fa-search'></i>
-              </span>
-            </button>
-          </div>
-          {searchString && (
-            <button
-              className='btn sec-pink clr-search'
-              onClick={() => dispatch({ type: "CLEAR_SEARCH" })}
-            >
-              Clear Search
-            </button>
-          )}
-        </div>
       </div>
       <div className='videos'>
         {categoryData.map((video) => {

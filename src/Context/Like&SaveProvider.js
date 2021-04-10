@@ -2,6 +2,10 @@ import { createContext, useContext, useReducer } from "react";
 
 export const LikeSaveContext = createContext();
 
+const found = (array, id) => {
+  return !!array.find((item) => item.id !== id);
+};
+
 export const LikeSaveProvider = ({ children }) => {
   const likeSaveReducer = (state, action) => {
     switch (action.type) {
@@ -30,8 +34,13 @@ export const LikeSaveProvider = ({ children }) => {
           }),
         };
       case "ADD_TO_HISTORY":
+        // console.log(action.payload);
         return {
           ...state,
+          // history: state.history.reduce((acc, value) => {
+          //   return value.id !== action.payload.id && [...acc, action.payload];
+          // }, state.history),
+          // history: found(state.history, action.payload.id) && action.payload,
           history: state.history.concat(action.payload),
         };
       case "REMOVE_FROM_HISTORY":
@@ -73,6 +82,8 @@ export const LikeSaveProvider = ({ children }) => {
       },
     ],
   });
+
+  // console.log({ likeSaveState });
 
   return (
     <LikeSaveContext.Provider value={{ likeSaveState, likeSaveDispatch }}>

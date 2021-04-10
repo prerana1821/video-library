@@ -4,10 +4,9 @@ import { NavLink } from "react-router-dom";
 import "./Header.css";
 
 export const Header = () => {
-  const { data, dispatch } = useData();
+  const { dispatch, searchString } = useData();
   const [inputSearch, setInputSearch] = useState("");
   const [toggle, setToggle] = useState(true);
-  const categories = [...new Set(data.map((item) => item.category))];
 
   return (
     <div>
@@ -21,6 +20,36 @@ export const Header = () => {
             <p className='logo-txt'>preTube</p>
           </div>
           <ul className={toggle ? "nav-menu" : "nav-menu active"}>
+            <div className='search'>
+              <div className='search-input'>
+                <input
+                  type='text'
+                  className='search-txt'
+                  required
+                  value={inputSearch}
+                  onChange={(e) => setInputSearch(e.target.value)}
+                  placeholder='Search...'
+                />
+                <button
+                  className='flt-icon'
+                  onClick={() => {
+                    dispatch({ type: "SEARCH", payload: inputSearch });
+                  }}
+                >
+                  <span>
+                    <i className='fas fa-lg fa-search'></i>
+                  </span>
+                </button>
+              </div>
+              {searchString && (
+                <button
+                  className='btn clr-search'
+                  onClick={() => dispatch({ type: "CLEAR_SEARCH" })}
+                >
+                  Clear Search
+                </button>
+              )}
+            </div>
             <li className='nav-item'>
               <NavLink
                 to='/'

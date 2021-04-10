@@ -1,6 +1,15 @@
 .App {
   text-align: center;
 }
-
+/* 
 .main {
+} */
+
+.btn-icon {
+  background: none;
+  border: none;
+  outline: #fff;
+  color: var(--dk-pink);
+  font-size: 0.65rem;
+  cursor: pointer;
 }
