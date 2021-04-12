@@ -69,21 +69,15 @@ export const LikeSaveProvider = ({ children }) => {
       {
         id: 1,
         videoId: "WylKHt5SuMI",
-        title: "Didn't understood this",
-        description: "dint understand how to wrokek",
-        time: "1.20",
+        note: "Didn't understood this",
       },
       {
         id: 2,
         videoId: "d3R2-nW065U",
-        title: "Didn't understood this",
-        description: "dint understand how to wrokek",
-        time: "1.20",
+        note: "Didn't understood this",
       },
     ],
   });
-
-  // console.log({ likeSaveState });
 
   return (
     <LikeSaveContext.Provider value={{ likeSaveState, likeSaveDispatch }}>

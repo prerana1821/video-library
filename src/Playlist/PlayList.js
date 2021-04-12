@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { usePlayList } from "../Context";
+import "./PlayList.css";
 
 export const PlayList = () => {
   const [createPlayList, setCreatePlayList] = useState("");
@@ -11,18 +14,18 @@ export const PlayList = () => {
   const playListsArray = Object.keys(playListState);
 
   return (
-    <div>
-      <h3>PlayLists</h3>
-      <div>
-        <label>
-          Create New Playlist:
-          <input
-            type='text'
-            value={createPlayList}
-            onChange={(e) => setCreatePlayList(e.target.value)}
-          />
-        </label>
+    <div className='showcase-playlist'>
+      <div className='create-playlist'>
+        <h3>Create New Playlist:</h3>
+        <input
+          className='input-txt-error'
+          type='text'
+          value={createPlayList}
+          onChange={(e) => setCreatePlayList(e.target.value)}
+        />
+
         <button
+          className='btn pink'
           onClick={() =>
             playListDispatch({
               type: "CREATE_PLAYLIST",
@@ -38,45 +41,76 @@ export const PlayList = () => {
         {playListsArray.map((playList) => {
           return (
             <div key={playList}>
-              <h4>{playList}</h4>
-              <div>
+              <div className='playlist-info'>
+                <h3>{playList}</h3>
+                <button
+                  className='btn-icon'
+                  onClick={() =>
+                    playListDispatch({
+                      type: "DELETE_PLAYLIST",
+                      payload: playList,
+                    })
+                  }
+                >
+                  <i class='fas fa-2x fa-trash-alt'></i>
+                </button>
+              </div>
+              <div className='playlist-details'>
                 {playListState[playList].map((video) => {
                   return (
-                    <div key={video.id}>
-                      <iframe
-                        width='420'
-                        height='315'
-                        title={video.name}
-                        src={video.url}
-                      ></iframe>
-                      <h4>{video.name}</h4>
-                      <button
-                        onClick={() =>
-                          playListDispatch({
-                            type: "DELETE_FROM_PLAYLIST",
-                            payload: {
-                              selectedPlayList: playList,
-                              video,
-                            },
-                          })
-                        }
-                      >
-                        Remove from Playlist
-                      </button>
-                    </div>
+                    <Link to={`/video/${video.id}`}>
+                      <div key={video.id} className='card'>
+                        <img
+                          className='thumbnail'
+                          src={video.thumbnail}
+                          alt={video.name}
+                        />
+                        <h4>{video.name}</h4>
+                        <div className='card-actions'>
+                          <p>Category: {video.category}</p>
+                          <button
+                            className='btn-icon'
+                            onClick={(e) => {
+                              e.preventDefault();
+                              playListDispatch({
+                                type: "DELETE_FROM_PLAYLIST",
+                                payload: {
+                                  selectedPlayList: playList,
+                                  video,
+                                },
+                              });
+                            }}
+                          >
+                            <i class='fas fa-2x fa-trash-alt'></i>
+                          </button>
+                        </div>
+                      </div>
+                    </Link>
+                    // <div key={video.id}>
+                    //   <iframe
+                    //     width='420'
+                    //     height='315'
+                    //     title={video.name}
+                    //     src={video.url}
+                    //   ></iframe>
+                    //   <h4>{video.name}</h4>
+                    //   <button
+                    //     onClick={() =>
+                    //       playListDispatch({
+                    //         type: "DELETE_FROM_PLAYLIST",
+                    //         payload: {
+                    //           selectedPlayList: playList,
+                    //           video,
+                    //         },
+                    //       })
+                    //     }
+                    //   >
+                    //     Remove from Playlist
+                    //   </button>
+                    // </div>
                   );
                 })}
               </div>
-              <button
-                onClick={() =>
-                  playListDispatch({
-                    type: "DELETE_PLAYLIST",
-                    payload: playList,
-                  })
-                }
-              >
-                Delete PlayList
-              </button>
             </div>
           );
         })}

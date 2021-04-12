@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 import { VideoListing } from "./VideoListing";
 import { Header } from "./Header";
-import { SideBar } from "./Sidebar";
 import { LikedVideos } from "./LikedVideos";
 import { SavedVideos } from "./SavedVideos";
 import { PlayList } from "./Playlist";
 import { Video } from "./Videos";
 import { History } from "./History";
+// import { SideBar } from "./Sidebar";
 import "./App.css";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
     <div className='App'>
       <Header />
       <div className='main'>
-        <SideBar />
+        {/* <SideBar /> */}
         <Routes>
           <Route path='/' element={<VideoListing />}></Route>
           <Route path='/video/:videoId' element={<Video />}></Route>

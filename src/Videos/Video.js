@@ -4,13 +4,12 @@ import { useState } from "react";
 import "./Video.css";
 
 export const Video = () => {
+  const { playListState, playListDispatch } = usePlayList();
+  const { likeSaveState, likeSaveDispatch } = useLikeSave();
   const { videoId } = useParams();
   const { data } = useData();
-  const { likeSaveState, likeSaveDispatch } = useLikeSave();
 
   const video = data.find((video) => video.id === videoId);
-
-  const { playListState, playListDispatch } = usePlayList();
 
   const playListsArray = Object.keys(playListState);
 
@@ -39,6 +38,7 @@ export const Video = () => {
             Save to Play List:
             <select
               onChange={(e) => {
+                console.log(e.target.value);
                 setSelectedPlaylist(e.target.value);
                 return playListDispatch({
                   type: "SAVE_TO_PLAYLIST",

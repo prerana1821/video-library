@@ -6,7 +6,7 @@ export const PlaylistProvider = ({ children }) => {
   const playListReducer = (state, action) => {
     switch (action.type) {
       case "SAVE_TO_PLAYLIST":
-        // console.log(action.payload.selectedPlayList);
+        console.log({ action });
         return {
           ...state,
           [action.payload.selectedPlayList]: [
@@ -50,7 +50,7 @@ export const PlaylistProvider = ({ children }) => {
     "My Learnings": [],
   });
 
-  // console.log(playListState);
+  console.log(playListState);
 
   return (
     <PlaylistContext.Provider value={{ playListState, playListDispatch }}>

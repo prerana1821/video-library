@@ -91,3 +91,12 @@
   font-size: 1rem;
   box-shadow: var(--secondary-box-shadow);
 }
+
+.btn-latest {
+  font-size: 1.3rem;
+  padding: 0.8rem 1rem;
+  color: var(--dk-pink);
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}

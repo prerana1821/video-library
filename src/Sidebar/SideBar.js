@@ -1,9 +1,9 @@
-import { NavLink } from "react-router-dom";
-import { useData } from "../Context";
+// import { NavLink } from "react-router-dom";
+// import { useData } from "../Context";
 import "./SideBar.css";
 
 export const SideBar = () => {
-  const { latestVideos, dispatch } = useData();
+  // const { latestVideos, dispatch } = useData();
 
   return (
     <div></div>
