@@ -1,10 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
+import { v4 } from "uuid";
 
 export const LikeSaveContext = createContext();
-
-const found = (array, id) => {
-  return !!array.find((item) => item.id !== id);
-};
 
 export const LikeSaveProvider = ({ children }) => {
   const likeSaveReducer = (state, action) => {
@@ -33,15 +30,32 @@ export const LikeSaveProvider = ({ children }) => {
             return item.id !== action.payload.id;
           }),
         };
-      case "ADD_TO_HISTORY":
-        // console.log(action.payload);
+      case "ADD_NOTE":
+        console.log("Hello");
         return {
           ...state,
-          // history: state.history.reduce((acc, value) => {
-          //   return value.id !== action.payload.id && [...acc, action.payload];
-          // }, state.history),
-          // history: found(state.history, action.payload.id) && action.payload,
-          history: state.history.concat(action.payload),
+          notes: state.notes.concat({
+            id: v4(),
+            videoId: action.payload.videoId,
+            note: action.payload.note,
+          }),
+        };
+      case "SAVE_NOTE":
+        console.log("Hii");
+        return {
+          ...state,
+          notes: state.notes.map((item) => {
+            return item.videoId === action.payload.videoId
+              ? { ...item, note: action.payload.note }
+              : item;
+          }),
+        };
+      case "ADD_TO_HISTORY":
+        return {
+          ...state,
+          history: state.history.some((ele) => ele.id === action.payload.id)
+            ? state.history
+            : state.history.concat(action.payload),
         };
       case "REMOVE_FROM_HISTORY":
         return {
@@ -65,18 +79,7 @@ export const LikeSaveProvider = ({ children }) => {
     likedVideos: [],
     savedVideos: [],
     history: [],
-    notes: [
-      {
-        id: 1,
-        videoId: "WylKHt5SuMI",
-        note: "Didn't understood this",
-      },
-      {
-        id: 2,
-        videoId: "d3R2-nW065U",
-        note: "Didn't understood this",
-      },
-    ],
+    notes: [],
   });
 
   return (

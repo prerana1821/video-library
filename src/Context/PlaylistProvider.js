@@ -6,7 +6,6 @@ export const PlaylistProvider = ({ children }) => {
   const playListReducer = (state, action) => {
     switch (action.type) {
       case "SAVE_TO_PLAYLIST":
-        console.log({ action });
         return {
           ...state,
           [action.payload.selectedPlayList]: [
@@ -27,8 +26,9 @@ export const PlaylistProvider = ({ children }) => {
           return object;
         }, {});
       case "DELETE_FROM_PLAYLIST":
-        // console.log(action.payload);
-        console.log(action.payload.selectedPlayList);
+        // console.log("11", action.payload);
+        // console.log("22", action.payload.selectedPlayList);
+        // console.log("33", state.selectedPlayList);
         // break;
         return {
           ...state,
@@ -50,7 +50,7 @@ export const PlaylistProvider = ({ children }) => {
     "My Learnings": [],
   });
 
-  console.log(playListState);
+  // console.log(playListState);
 
   return (
     <PlaylistContext.Provider value={{ playListState, playListDispatch }}>

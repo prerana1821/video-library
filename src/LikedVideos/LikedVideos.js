@@ -39,7 +39,7 @@ export const LikedVideos = () => {
                         });
                       }}
                     >
-                      <i class='fas  fa-2x fa-thumbs-down'></i>
+                      <i className='fas  fa-2x fa-thumbs-down'></i>
                     </button>
                   </div>
                 </div>

@@ -52,7 +52,7 @@ export const PlayList = () => {
                     })
                   }
                 >
-                  <i class='fas fa-2x fa-trash-alt'></i>
+                  <i className='fas fa-2x fa-trash-alt'></i>
                 </button>
               </div>
               <div className='playlist-details'>
@@ -76,12 +76,12 @@ export const PlayList = () => {
                                 type: "DELETE_FROM_PLAYLIST",
                                 payload: {
                                   selectedPlayList: playList,
-                                  video,
+                                  video: video,
                                 },
                               });
                             }}
                           >
-                            <i class='fas fa-2x fa-trash-alt'></i>
+                            <i className='fas fa-2x fa-trash-alt'></i>
                           </button>
                         </div>
                       </div>

@@ -45,7 +45,7 @@ export const SavedVideos = () => {
                         });
                       }}
                     >
-                      <i class='fas fa-2x fa-trash-alt'></i>
+                      <i className='fas fa-2x fa-trash-alt'></i>
                     </button>
                   </div>
                 </div>

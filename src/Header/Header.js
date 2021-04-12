@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useData } from "../Context";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import "./Header.css";
 
 export const Header = () => {
@@ -17,7 +17,9 @@ export const Header = () => {
               src='https://prekit.netlify.app/images/preCodes.png'
               alt='Logo'
             />
-            <p className='logo-txt'>preTube</p>
+            <Link to='/'>
+              <p className='logo-txt'>preTube</p>
+            </Link>
           </div>
           <ul className={toggle ? "nav-menu" : "nav-menu active"}>
             <div className='search'>
@@ -44,7 +46,10 @@ export const Header = () => {
               {searchString && (
                 <button
                   className='btn clr-search'
-                  onClick={() => dispatch({ type: "CLEAR_SEARCH" })}
+                  onClick={() => {
+                    setInputSearch("");
+                    dispatch({ type: "CLEAR_SEARCH" });
+                  }}
                 >
                   Clear Search
                 </button>
