@@ -41,7 +41,6 @@ export const LikeSaveProvider = ({ children }) => {
           }),
         };
       case "SAVE_NOTE":
-        console.log("Hii");
         return {
           ...state,
           notes: state.notes.map((item) => {
@@ -81,6 +80,8 @@ export const LikeSaveProvider = ({ children }) => {
     history: [],
     notes: [],
   });
+
+  console.log(likeSaveState);
 
   return (
     <LikeSaveContext.Provider value={{ likeSaveState, likeSaveDispatch }}>

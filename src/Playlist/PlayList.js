@@ -6,8 +6,9 @@ import "./PlayList.css";
 
 export const PlayList = () => {
   const [createPlayList, setCreatePlayList] = useState("");
-
   const { playListState, playListDispatch } = usePlayList();
+  const [newPlayListName, setNewPlayListName] = useState("");
+  const [editPlayListName, setEditPlayListName] = useState(false);
 
   // console.log({ playListState });
 
@@ -42,7 +43,30 @@ export const PlayList = () => {
           return (
             <div key={playList}>
               <div className='playlist-info'>
-                <h3>{playList}</h3>
+                {editPlayListName && playList ? (
+                  <input
+                    type='text'
+                    value={setNewPlayListName}
+                    onChange={(e) => setNewPlayListName(e.target.value)}
+                  />
+                ) : (
+                  <h3>{playList}</h3>
+                )}
+                <button
+                  className='btn-icon'
+                  onClick={() => {
+                    console.log(playList);
+                    console.log(playListsArray.playList);
+                    playList === playListsArray[playList] &&
+                      setEditPlayListName(!editPlayListName);
+                    // playListDispatch({
+                    //   type: "EDIT_PLAYLIST_NAME",
+                    //   payload: { playList, newPlayListName },
+                    // });
+                  }}
+                >
+                  <i className='fas fa-2x  fa-pen'></i>
+                </button>
                 <button
                   className='btn-icon'
                   onClick={() =>

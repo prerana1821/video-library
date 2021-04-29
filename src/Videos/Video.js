@@ -14,12 +14,6 @@ export const Video = () => {
   const playListsArray = Object.keys(playListState);
   const [selectedPlaylist, setSelectedPlaylist] = useState(playListsArray[0]);
 
-  // const videoNote = likeSaveState.notes.find(
-  //   (item) => item.videoId === videoId
-  // );
-
-  // console.log(videoNote);
-
   const [editNote, setEditNote] = useState(true);
   const [showNote, setShowNote] = useState(false);
   const [inputText, setInputText] = useState("");
@@ -35,12 +29,6 @@ export const Video = () => {
       return value.id === item.id ? "fas fa-lg fa-clock" : acc;
     }, "far fa-lg fa-clock");
   };
-
-  // const saveUnSaveNotes = (item) => {
-  //   return likeSaveState.notes.reduce((acc, value) => {
-  //     return value.id === item.id ? "far fa-sticky-note" : acc;
-  //   }, "fas fa-lg fa-sticky-note");
-  // };
 
   return (
     <div>
@@ -73,33 +61,21 @@ export const Video = () => {
                 className='btn pink'
                 onClick={() => {
                   setEditNote(!editNote);
-                  console.log("Hello");
-                  return likeSaveState.notes.map((item) => {
-                    console.log("Hellllowww");
-                    return item.videoId === videoId
-                      ? likeSaveDispatch({
-                          type: "SAVE_NOTE",
-                          payload: { videoId: videoId, note: inputText },
-                        })
-                      : likeSaveDispatch({
-                          type: "ADD_NOTE",
-                          payload: { videoId: videoId, note: inputText },
-                        });
-                  });
-                  // return likeSaveState.notes.reduce(
-                  //   (acc, value) => {
-                  //     return value.videoId === videoId
-                  //       ? likeSaveDispatch({
-                  //           type: "SAVE_NOTE",
-                  //           payload: { videoId: videoId, note: inputText },
-                  //         })
-                  //       : acc;
-                  //   },
-                  //   likeSaveDispatch({
-                  //     type: "ADD_NOTE",
-                  //     payload: { videoId: videoId, note: inputText },
-                  //   })
-                  // );
+                  const found = likeSaveState.notes.some(
+                    (value) => value.videoId === videoId
+                  );
+                  found
+                    ? likeSaveDispatch({
+                        type: "SAVE_NOTE",
+                        payload: {
+                          videoId: videoId,
+                          note: inputText,
+                        },
+                      })
+                    : likeSaveDispatch({
+                        type: "ADD_NOTE",
+                        payload: { videoId: videoId, note: inputText },
+                      });
                 }}
               >
                 {editNote ? "Save Note" : "Edit Note"}
