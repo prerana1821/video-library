@@ -26,6 +26,7 @@ export const PlaylistProvider = ({ children }) => {
           return object;
         }, {});
       case "DELETE_FROM_PLAYLIST":
+        console.log("Hello");
         // console.log("11", action.payload);
         // console.log("22", action.payload.selectedPlayList);
         // console.log("33", state.selectedPlayList);
@@ -35,7 +36,7 @@ export const PlaylistProvider = ({ children }) => {
           [action.payload
             .selectedPlayList]: action.payload.selectedPlayList.filter(
             (item) => {
-              return item.id !== action.payload.video.id;
+              return item.id !== action.payload.selectedVideo.id;
             }
           ),
         };

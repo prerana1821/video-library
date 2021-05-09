@@ -1,0 +1,53 @@
+.modal-add-playlist {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  max-width: 300px;
+  width: 100%;
+}
+
+.modal-heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-btn-close {
+  cursor: pointer;
+  font-size: 1rem;
+  background: none;
+  border: none;
+}
+
+.playlist-checkbox {
+  margin-right: 1rem;
+}
+
+.add-playlist {
+  display: flex;
+  margin-top: 0.5rem;
+  justify-content: space-between;
+}
+
+.add-playlist-input {
+  padding: 0.5rem;
+  outline: #fff;
+  border: none;
+}
+
+.show-playlist {
+  text-align: initial;
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.add-playList-divider {
+  border-top: 2px solid var(--dk-pink);
+}
+
+.add-playlist-btn {
+  padding: 0.3rem;
+  border: none;
+  font-size: 1.1rem;
+  background: none;
+  outline: none;
+}

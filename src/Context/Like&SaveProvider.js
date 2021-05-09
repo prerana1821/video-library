@@ -3,6 +3,8 @@ import { v4 } from "uuid";
 
 export const LikeSaveContext = createContext();
 
+let playListId = 0;
+
 export const LikeSaveProvider = ({ children }) => {
   const likeSaveReducer = (state, action) => {
     switch (action.type) {
@@ -68,6 +70,52 @@ export const LikeSaveProvider = ({ children }) => {
           ...state,
           history: state.history.splice(0, state.history.length),
         };
+      case "CREATE_PLAYLIST":
+        return {
+          ...state,
+          playlists: state.playlists.concat({
+            id: ++playListId,
+            title: action.payload,
+            videos: [],
+          }),
+        };
+      case "DELETE_PLAYLIST":
+        return {
+          ...state,
+          playlists: state.playlists.filter((item) => {
+            return item.id !== action.payload.id;
+          }),
+        };
+      case "ADD_TO_PLAYLIST":
+        return {
+          ...state,
+          playlists: state.playlists.map((item) => {
+            return item.title === action.payload.selectedPlayList
+              ? {
+                  ...item,
+                  videos: item.videos.some(
+                    (video) => video.id === action.payload.selectedVideo.id
+                  )
+                    ? item.videos
+                    : item.videos.concat(action.payload.selectedVideo),
+                }
+              : item;
+          }),
+        };
+      case "REMOVE_FROM_PLAYLIST":
+        return {
+          ...state,
+          playlists: state.playlists.map((item) => {
+            return item.title === action.payload.selectedPlayList
+              ? {
+                  ...item,
+                  videos: item.videos.filter(
+                    (video) => video.id !== action.payload.selectedVideo.id
+                  ),
+                }
+              : item;
+          }),
+        };
       default:
         console.log("Something went wrong");
         break;
@@ -79,6 +127,7 @@ export const LikeSaveProvider = ({ children }) => {
     savedVideos: [],
     history: [],
     notes: [],
+    playlists: [],
   });
 
   console.log(likeSaveState);
@@ -93,3 +142,11 @@ export const LikeSaveProvider = ({ children }) => {
 export const useLikeSave = () => {
   return useContext(LikeSaveContext);
 };
+
+// [
+//   {
+//     id:"",
+//     name:'banana',
+//     videos:[videoId]
+//   }
+// ]
