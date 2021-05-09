@@ -57,7 +57,10 @@ export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
                   className='playlist-checkbox'
                   name={playList.title}
                   value={playList.title}
-                  checked={checkedItems[playList.title]}
+                  checked={
+                    checkedItems[playList.title] ||
+                    playList.videos.some((item) => item.id === video.id)
+                  }
                   onChange={handleChange}
                 />
                 {playList.title}
