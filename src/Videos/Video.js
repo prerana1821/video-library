@@ -29,9 +29,6 @@ export const Video = () => {
         ? "fas fa-lg fa-clock"
         : acc;
     }, "far fa-lg fa-clock");
-    // return likeSaveState.savedVideos.reduce((acc, value) => {
-    //   return value.id === item.id ? "fas fa-lg fa-clock" : acc;
-    // }, "far fa-lg fa-clock");
   };
 
   return (
@@ -102,14 +99,6 @@ export const Video = () => {
                     },
                   })
                 );
-                // likeSaveState.savedVideos.reduce((acc, value) => {
-                //   return value.id === video.id
-                //     ? likeSaveDispatch({
-                //         type: "UNSAVE_VIDEO",
-                //         payload: video,
-                //       })
-                //     : acc;
-                // }, likeSaveDispatch({ type: "SAVE_VIDEO", payload: video }));
               }}
             >
               <div className='avatar av-sm av-pink'>

@@ -20,18 +20,6 @@ export const LikeSaveProvider = ({ children }) => {
             return item.id !== action.payload.id;
           }),
         };
-      case "SAVE_VIDEO":
-        return {
-          ...state,
-          savedVideos: state.savedVideos.concat(action.payload),
-        };
-      case "UNSAVE_VIDEO":
-        return {
-          ...state,
-          savedVideos: state.savedVideos.filter((item) => {
-            return item.id !== action.payload.id;
-          }),
-        };
       case "ADD_NOTE":
         console.log("Hello");
         return {
@@ -125,7 +113,6 @@ export const LikeSaveProvider = ({ children }) => {
 
   const [likeSaveState, likeSaveDispatch] = useReducer(likeSaveReducer, {
     likedVideos: [],
-    savedVideos: [],
     history: [],
     notes: [],
     playlists: [
