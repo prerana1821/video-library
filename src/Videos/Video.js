@@ -24,7 +24,7 @@ export const Video = () => {
 
   const saveUnSave = (item) => {
     return likeSaveState.playlists.reduce((acc, value) => {
-      return value.title === "savedVideos" &&
+      return value.title === "Watch Later" &&
         value.videos.some((video) => video.id === item.id)
         ? "fas fa-lg fa-clock"
         : acc;
@@ -80,13 +80,13 @@ export const Video = () => {
                 e.preventDefault();
                 likeSaveState.playlists.reduce(
                   (acc, value) => {
-                    return value.title === "savedVideos" &&
+                    return value.title === "Watch Later" &&
                       value.videos.some((item) => item.id === video.id)
                       ? acc
                       : likeSaveDispatch({
                           type: "ADD_TO_PLAYLIST",
                           payload: {
-                            selectedPlayList: "savedVideos",
+                            selectedPlayList: "Watch Later",
                             selectedVideo: video,
                           },
                         });
@@ -94,7 +94,7 @@ export const Video = () => {
                   likeSaveDispatch({
                     type: "REMOVE_FROM_PLAYLIST",
                     payload: {
-                      selectedPlayList: "savedVideos",
+                      selectedPlayList: "Watch Later",
                       selectedVideo: video,
                     },
                   })

@@ -118,7 +118,7 @@ export const LikeSaveProvider = ({ children }) => {
     playlists: [
       {
         id: 1000,
-        title: "savedVideos",
+        title: "Watch Later",
         videos: [],
       },
     ],

@@ -8,7 +8,7 @@ export const SavedVideos = () => {
   return (
     <div>
       {likeSaveState.playlists.map((playList) => {
-        return playList.title === "savedVideos" &&
+        return playList.title === "Watch Later" &&
           playList.videos.length === 0 ? (
           <div className='card empty-card'>
             <h3>No Saved Videos</h3>
@@ -20,38 +20,40 @@ export const SavedVideos = () => {
           </div>
         ) : (
           <div className='show-videos'>
-            {playList.videos.map((video) => {
-              return (
-                <Link to={`/video/${video.id}`}>
-                  <div key={video.id} className='card'>
-                    <img
-                      className='thumbnail'
-                      src={video.thumbnail}
-                      alt={video.name}
-                    />
-                    <h4>{video.name}</h4>
-                    <div className='card-actions'>
-                      <p>Category: {video.category}</p>
-                      <button
-                        className='btn-icon'
-                        onClick={(e) => {
-                          e.preventDefault();
-                          likeSaveDispatch({
-                            type: "REMOVE_FROM_PLAYLIST",
-                            payload: {
-                              selectedPlayList: "savedVideos",
-                              selectedVideo: video,
-                            },
-                          });
-                        }}
-                      >
-                        <i className='fas fa-2x fa-trash-alt'></i>
-                      </button>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
+            {playList.title === "Watch Later"
+              ? playList.videos.map((video) => {
+                  return (
+                    <Link to={`/video/${video.id}`}>
+                      <div key={video.id} className='card'>
+                        <img
+                          className='thumbnail'
+                          src={video.thumbnail}
+                          alt={video.name}
+                        />
+                        <h4>{video.name}</h4>
+                        <div className='card-actions'>
+                          <p>Category: {video.category}</p>
+                          <button
+                            className='btn-icon'
+                            onClick={(e) => {
+                              e.preventDefault();
+                              likeSaveDispatch({
+                                type: "REMOVE_FROM_PLAYLIST",
+                                payload: {
+                                  selectedPlayList: "Watch Later",
+                                  selectedVideo: video,
+                                },
+                              });
+                            }}
+                          >
+                            <i className='fas fa-2x fa-trash-alt'></i>
+                          </button>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })
+              : null}
           </div>
         );
       })}

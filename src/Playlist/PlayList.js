@@ -21,12 +21,13 @@ export const PlayList = () => {
 
         <button
           className='btn pink'
-          onClick={() =>
+          onClick={() => {
             likeSaveDispatch({
               type: "CREATE_PLAYLIST",
               payload: createPlayList,
-            })
-          }
+            });
+            setCreatePlayList("");
+          }}
         >
           Save
         </button>
@@ -34,7 +35,7 @@ export const PlayList = () => {
 
       <div>
         {likeSaveState.playlists.map((playList) => {
-          return (
+          return playList.title !== "Watch Later" ? (
             <div key={playList.id}>
               <div className='playlist-info'>
                 <h3>{playList.title}</h3>
@@ -85,7 +86,7 @@ export const PlayList = () => {
                 })}
               </div>
             </div>
-          );
+          ) : null;
         })}
       </div>
     </div>
