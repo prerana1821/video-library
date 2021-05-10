@@ -52,7 +52,7 @@ export const Video = () => {
               height='500px'
               style={{ borderRadius: "0.5rem" }}
               title={video.name}
-              src={video.url}
+              src={`https://www.youtube.com/embed/${video.id}?mute=0`}
             ></iframe>
           </div>
         </div>
