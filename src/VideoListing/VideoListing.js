@@ -9,9 +9,15 @@ export const VideoListing = () => {
   const categories = [...new Set(data.map((item) => item.category))];
 
   const saveUnSave = (item) => {
-    return likeSaveState.savedVideos.reduce((acc, value) => {
-      return value.id === item.id ? "fas fa-lg fa-clock" : acc;
+    return likeSaveState.playlists.reduce((acc, value) => {
+      return value.title === "savedVideos" &&
+        value.videos.some((video) => video.id === item.id)
+        ? "fas fa-lg fa-clock"
+        : acc;
     }, "far fa-lg fa-clock");
+    // return likeSaveState.savedVideos.reduce((acc, value) => {
+    //   return value.id === item.id ? "fas fa-lg fa-clock" : acc;
+    // }, "far fa-lg fa-clock");
   };
 
   return (
@@ -74,14 +80,35 @@ export const VideoListing = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                       e.preventDefault();
-                      likeSaveState.savedVideos.reduce((acc, value) => {
-                        return value.id === video.id
-                          ? likeSaveDispatch({
-                              type: "UNSAVE_VIDEO",
-                              payload: video,
-                            })
-                          : acc;
-                      }, likeSaveDispatch({ type: "SAVE_VIDEO", payload: video }));
+                      likeSaveState.playlists.reduce(
+                        (acc, value) => {
+                          return value.title === "savedVideos" &&
+                            value.videos.some((item) => item.id === video.id)
+                            ? acc
+                            : likeSaveDispatch({
+                                type: "ADD_TO_PLAYLIST",
+                                payload: {
+                                  selectedPlayList: "savedVideos",
+                                  selectedVideo: video,
+                                },
+                              });
+                        },
+                        likeSaveDispatch({
+                          type: "REMOVE_FROM_PLAYLIST",
+                          payload: {
+                            selectedPlayList: "savedVideos",
+                            selectedVideo: video,
+                          },
+                        })
+                      );
+                      // likeSaveState.savedVideos.reduce((acc, value) => {
+                      //   return value.id === video.id
+                      //     ? likeSaveDispatch({
+                      //         type: "UNSAVE_VIDEO",
+                      //         payload: video,
+                      //       })
+                      //     : acc;
+                      // }, likeSaveDispatch({ type: "SAVE_VIDEO", payload: video }));
                     }}
                   >
                     <div className='avatar av-sm av-pink'>

@@ -103,6 +103,7 @@ export const LikeSaveProvider = ({ children }) => {
           }),
         };
       case "REMOVE_FROM_PLAYLIST":
+        console.log({ action });
         return {
           ...state,
           playlists: state.playlists.map((item) => {
@@ -127,7 +128,13 @@ export const LikeSaveProvider = ({ children }) => {
     savedVideos: [],
     history: [],
     notes: [],
-    playlists: [],
+    playlists: [
+      {
+        id: 1000,
+        title: "savedVideos",
+        videos: [],
+      },
+    ],
   });
 
   console.log(likeSaveState);

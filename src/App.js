@@ -6,7 +6,6 @@ import { SavedVideos } from "./SavedVideos";
 import { PlayList } from "./Playlist";
 import { Video } from "./Videos";
 import { History } from "./History";
-// import { SideBar } from "./Sidebar";
 import "./App.css";
 
 function App() {
@@ -14,7 +13,6 @@ function App() {
     <div className='App'>
       <Header />
       <div className='main'>
-        {/* <SideBar /> */}
         <Routes>
           <Route path='/' element={<VideoListing />}></Route>
           <Route path='/video/:videoId' element={<Video />}></Route>
