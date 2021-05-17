@@ -14,7 +14,6 @@ export const LikeSaveProvider = ({ children }) => {
     if (login) {
       (async () => {
         try {
-          // dispatch({ type: "STATUS", payload: "Loading data from server..." });
           const response = await axios.get(
             `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}`
           );
@@ -68,7 +67,9 @@ export const LikeSaveProvider = ({ children }) => {
       case "ADD_TO_HISTORY":
         return {
           ...state,
-          history: state.history.some((ele) => ele.id === action.payload.id)
+          history: state.history.some(
+            (ele) => ele.videoId._id === action.payload._id
+          )
             ? state.history
             : state.history.concat(action.payload),
         };
@@ -76,7 +77,7 @@ export const LikeSaveProvider = ({ children }) => {
         return {
           ...state,
           history: state.history.filter((item) => {
-            return item.id !== action.payload.id;
+            return item.videoId._id !== action.payload._id;
           }),
         };
       case "CLEAR_HISTORY":
@@ -143,7 +144,7 @@ export const LikeSaveProvider = ({ children }) => {
     notes: [],
     playlists: [
       {
-        id: 1000,
+        _id: 1000,
         title: "Watch Later",
         videos: [],
       },

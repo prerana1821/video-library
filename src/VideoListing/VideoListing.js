@@ -1,11 +1,13 @@
 import { useLikeSave, useData } from "../Context";
 import { Link } from "react-router-dom";
 import "./VideoListing.css";
+import { useAuth } from "../Auth";
+import { addVideoToHistory } from "../api-calls";
 
 export const VideoListing = () => {
   const { data, latestVideos, categoryData, dispatch, loading } = useData();
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
-
+  const { user } = useAuth();
   const categories = [...new Set(data.map((item) => item.category))];
 
   const saveUnSave = (item) => {
@@ -59,8 +61,9 @@ export const VideoListing = () => {
           return (
             <Link to={`video/${video._id}`}>
               <div
-                onClick={() =>
-                  likeSaveDispatch({ type: "ADD_TO_HISTORY", payload: video })
+                onClick={
+                  () => addVideoToHistory(user, video, likeSaveDispatch)
+                  // likeSaveDispatch({ type: "ADD_TO_HISTORY", payload: video })
                 }
                 key={video._id}
                 className='card'

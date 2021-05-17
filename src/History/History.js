@@ -1,9 +1,15 @@
 import { useLikeSave } from "../Context";
 import { Link } from "react-router-dom";
 import "./History.css";
+import { clearHistory, deleteVideoFromHistory } from "../api-calls";
+import { useAuth } from "../Auth";
 
 export const History = () => {
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
+  const { user } = useAuth();
+
+  console.log("noo");
+  console.log({ likeSaveState });
 
   return (
     <div>
@@ -21,18 +27,20 @@ export const History = () => {
           <button
             className='btn sec-pink'
             onClick={() =>
-              likeSaveDispatch({
-                type: "CLEAR_HISTORY",
-              })
+              // likeSaveDispatch({
+              //   type: "CLEAR_HISTORY",
+              // })
+              clearHistory(user, likeSaveDispatch)
             }
           >
             Clear All History
           </button>
           <div className='show-videos'>
-            {likeSaveState.history.map((video) => {
+            {likeSaveState.history.map(({ videoId: video }) => {
+              console.log(video);
               return (
-                <Link to={`/video/${video.id}`}>
-                  <div key={video.id} className='card'>
+                <Link to={`/video/${video._id}`}>
+                  <div key={video._id} className='card'>
                     <img
                       className='thumbnail'
                       src={video.thumbnail}
@@ -45,10 +53,11 @@ export const History = () => {
                         className='btn-icon'
                         onClick={(e) => {
                           e.preventDefault();
-                          likeSaveDispatch({
-                            type: "REMOVE_FROM_HISTORY",
-                            payload: video,
-                          });
+                          // likeSaveDispatch({
+                          //   type: "REMOVE_FROM_HISTORY",
+                          //   payload: video,
+                          // });
+                          deleteVideoFromHistory(user, video, likeSaveDispatch);
                         }}
                       >
                         <i className='fas fa-2x fa-trash-alt'></i>
