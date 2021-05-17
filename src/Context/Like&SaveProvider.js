@@ -43,7 +43,7 @@ export const LikeSaveProvider = ({ children }) => {
         return {
           ...state,
           likedVideos: state.likedVideos.filter((item) => {
-            return item.id !== action.payload.id;
+            return item.videoId._id !== action.payload._id;
           }),
         };
       case "ADD_NOTE":

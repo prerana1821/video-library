@@ -6,9 +6,9 @@ import { SavedVideos } from "./SavedVideos";
 import { PlayList } from "./Playlist";
 import { Video } from "./Videos";
 import { History } from "./History";
-import "./App.css";
 import { Login, PrivateRoute, SignUp } from "./Auth";
 import { Account } from "./Auth/Account";
+import "./App.css";
 
 function App() {
   return (

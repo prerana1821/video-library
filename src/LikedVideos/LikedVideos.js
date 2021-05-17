@@ -1,7 +1,10 @@
 import { useLikeSave } from "../Context";
 import { Link } from "react-router-dom";
+import { deleteVideoFromLikedVideos } from "../api-calls";
+import { useAuth } from "../Auth";
 
 export const LikedVideos = () => {
+  const { user } = useAuth();
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
 
   return (
@@ -17,7 +20,7 @@ export const LikedVideos = () => {
         </div>
       ) : (
         <div className='show-videos'>
-          {likeSaveState.likedVideos.map((video) => {
+          {likeSaveState.likedVideos.map(({ videoId: video }) => {
             return (
               <Link to={`/video/${video.id}`}>
                 <div key={video.id} className='card'>
@@ -33,10 +36,15 @@ export const LikedVideos = () => {
                       className='btn-icon'
                       onClick={(e) => {
                         e.preventDefault();
-                        likeSaveDispatch({
-                          type: "UNLIKE_VIDEO",
-                          payload: video,
-                        });
+                        deleteVideoFromLikedVideos(
+                          user,
+                          video,
+                          likeSaveDispatch
+                        );
+                        // likeSaveDispatch({
+                        //   type: "UNLIKE_VIDEO",
+                        //   payload: video,
+                        // });
                       }}
                     >
                       <i className='fas  fa-2x fa-thumbs-down'></i>

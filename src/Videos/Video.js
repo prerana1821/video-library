@@ -5,6 +5,11 @@ import Markdown from "react-remarkable";
 import { AddToPlayList } from "../AddToPlayList/AddToPlayList";
 import { WatchNext } from "../WatchNext/WatchNext";
 import "./Video.css";
+import { useAuth } from "../Auth";
+import {
+  addVideoToLikedVideos,
+  deleteVideoFromLikedVideos,
+} from "../api-calls";
 
 export const Video = () => {
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
@@ -15,10 +20,11 @@ export const Video = () => {
   const [editNote, setEditNote] = useState(true);
   const [showNote, setShowNote] = useState(false);
   const [inputText, setInputText] = useState("");
+  const { user } = useAuth();
 
   const likeUnLike = (item) => {
     return likeSaveState.likedVideos.reduce((acc, value) => {
-      return value.id === item._id ? "fas fa-lg fa-thumbs-up" : acc;
+      return value.videoId._id === item._id ? "fas fa-lg fa-thumbs-up" : acc;
     }, "far fa-lg fa-thumbs-up");
   };
 
@@ -108,14 +114,14 @@ export const Video = () => {
             <button
               className='btn-card-actions'
               onClick={() => {
+                console.log("Hello");
+                console.log(video);
                 likeSaveState.likedVideos.reduce((acc, value) => {
-                  return value.id === video._id
-                    ? likeSaveDispatch({
-                        type: "UNLIKE_VIDEO",
-                        payload: video,
-                      })
+                  console.log(value);
+                  return value.videoId._id === video._id
+                    ? deleteVideoFromLikedVideos(user, video, likeSaveDispatch)
                     : acc;
-                }, likeSaveDispatch({ type: "LIKE_VIDEO", payload: video }));
+                }, addVideoToLikedVideos(user, video, likeSaveDispatch));
               }}
             >
               <div className='avatar av-sm av-pink'>
