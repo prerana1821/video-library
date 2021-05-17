@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./VideoListing.css";
 
 export const VideoListing = () => {
-  const { data, latestVideos, categoryData, dispatch } = useData();
+  const { data, latestVideos, categoryData, dispatch, loading } = useData();
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
 
   const categories = [...new Set(data.map((item) => item.category))];
@@ -11,7 +11,7 @@ export const VideoListing = () => {
   const saveUnSave = (item) => {
     return likeSaveState.playlists.reduce((acc, value) => {
       return value.title === "Watch Later" &&
-        value.videos.some((video) => video.id === item.id)
+        value.videos.some((video) => video.id === item._id)
         ? "fas fa-lg fa-clock"
         : acc;
     }, "far fa-lg fa-clock");
@@ -28,6 +28,7 @@ export const VideoListing = () => {
             >
               <li>All Videos</li>
             </button>
+            <h1>{loading}</h1>
             {categories.map((category) => {
               return (
                 <li
@@ -56,12 +57,12 @@ export const VideoListing = () => {
       <div className='videos'>
         {categoryData.map((video) => {
           return (
-            <Link to={`video/${video.id}`}>
+            <Link to={`video/${video._id}`}>
               <div
                 onClick={() =>
                   likeSaveDispatch({ type: "ADD_TO_HISTORY", payload: video })
                 }
-                key={video.id}
+                key={video._id}
                 className='card'
               >
                 <img
@@ -80,7 +81,7 @@ export const VideoListing = () => {
                       likeSaveState.playlists.reduce(
                         (acc, value) => {
                           return value.title === "Watch Later" &&
-                            value.videos.some((item) => item.id === video.id)
+                            value.videos.some((item) => item.id === video._id)
                             ? acc
                             : likeSaveDispatch({
                                 type: "ADD_TO_PLAYLIST",

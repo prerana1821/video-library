@@ -14,8 +14,8 @@ export const WatchNext = ({ video }) => {
     <div>
       {categoryData.map((video) => {
         return (
-          <Link to={`/video/${video.id}`} key={video.id}>
-            <div className='watch-next-card' key={video.id}>
+          <Link to={`/video/${video._id}`} key={video._id}>
+            <div className='watch-next-card' key={video._id}>
               <img
                 className='watch-next-img'
                 src={video.thumbnail}

@@ -1,13 +1,39 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 import { v4 } from "uuid";
+import { useAuth } from "../Auth";
+import axios from "axios";
 
 export const LikeSaveContext = createContext();
 
 let playListId = 0;
 
 export const LikeSaveProvider = ({ children }) => {
+  const { login, user } = useAuth();
+
+  useEffect(() => {
+    if (login) {
+      (async () => {
+        try {
+          // dispatch({ type: "STATUS", payload: "Loading data from server..." });
+          const response = await axios.get(
+            `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}`
+          );
+          console.log({ response });
+          const data = response.data.userDetails;
+          likeSaveDispatch({ type: "ADD_USER_DATA", payload: data });
+        } catch (error) {
+          // dispatch({ type: "STATUS", payload: "Sorry, try again later.." });
+        } finally {
+          // dispatch({ type: "STATUS", payload: "" });
+        }
+      })();
+    }
+  }, [login, user]);
+
   const likeSaveReducer = (state, action) => {
     switch (action.type) {
+      case "ADD_USER_DATA":
+        return action.payload;
       case "LIKE_VIDEO":
         return {
           ...state,
@@ -136,11 +162,3 @@ export const LikeSaveProvider = ({ children }) => {
 export const useLikeSave = () => {
   return useContext(LikeSaveContext);
 };
-
-// [
-//   {
-//     id:"",
-//     name:'banana',
-//     videos:[videoId]
-//   }
-// ]

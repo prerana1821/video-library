@@ -1,11 +1,19 @@
-import { createContext, useContext, useReducer } from "react";
-import { data } from "../database";
+import { createContext, useContext, useReducer, useEffect } from "react";
+// import { data } from "../database";
+import axios from "axios";
 
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const dataReducer = (state, action) => {
     switch (action.type) {
+      case "ADD_DATA":
+        return { ...state, data: action.payload };
+      case "STATUS":
+        return {
+          ...state,
+          loading: action.payload,
+        };
       case "VIEW_BY_CATEGORY":
         return { ...state, viewByCategory: action.payload };
       case "CLEAR_CATEGORY":
@@ -21,6 +29,24 @@ export const DataProvider = ({ children }) => {
         break;
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        dispatch({ type: "STATUS", payload: "Loading data from server..." });
+        const response = await axios.get(
+          "https://api-pretube.prerananawar1.repl.co/videos"
+        );
+        console.log({ response });
+        const data = response.data.videos;
+        dispatch({ type: "ADD_DATA", payload: data });
+      } catch (error) {
+        dispatch({ type: "STATUS", payload: "Sorry, try again later.." });
+      } finally {
+        dispatch({ type: "STATUS", payload: "" });
+      }
+    })();
+  }, []);
 
   const getCategoryData = (videoList, category) => {
     if (category) {
@@ -52,14 +78,16 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-  const [{ latestVideos, viewByCategory, searchString }, dispatch] = useReducer(
-    dataReducer,
-    {
-      latestVideos: false,
-      viewByCategory: "",
-      searchString: "",
-    }
-  );
+  const [
+    { latestVideos, viewByCategory, searchString, loading, data },
+    dispatch,
+  ] = useReducer(dataReducer, {
+    data: [],
+    latestVideos: false,
+    viewByCategory: "",
+    searchString: "",
+    loading: "",
+  });
 
   const searchedData = getSearchedData(data, searchString);
   const latestData = getLatestData(searchedData, latestVideos);
@@ -67,7 +95,14 @@ export const DataProvider = ({ children }) => {
 
   return (
     <DataContext.Provider
-      value={{ data, searchString, latestVideos, categoryData, dispatch }}
+      value={{
+        data,
+        loading,
+        searchString,
+        latestVideos,
+        categoryData,
+        dispatch,
+      }}
     >
       {children}
     </DataContext.Provider>

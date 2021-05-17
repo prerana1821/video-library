@@ -2,15 +2,15 @@ import { useParams } from "react-router";
 import { useLikeSave, useData } from "../Context";
 import { useState } from "react";
 import Markdown from "react-remarkable";
-import "./Video.css";
 import { AddToPlayList } from "../AddToPlayList/AddToPlayList";
 import { WatchNext } from "../WatchNext/WatchNext";
+import "./Video.css";
 
 export const Video = () => {
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
   const { videoId } = useParams();
   const { data } = useData();
-  const video = data.find((video) => video.id === videoId);
+  const video = data.find((video) => video._id === videoId);
   const [addToPlaylistModal, setAddToPlaylistModal] = useState(false);
   const [editNote, setEditNote] = useState(true);
   const [showNote, setShowNote] = useState(false);
@@ -18,14 +18,14 @@ export const Video = () => {
 
   const likeUnLike = (item) => {
     return likeSaveState.likedVideos.reduce((acc, value) => {
-      return value.id === item.id ? "fas fa-lg fa-thumbs-up" : acc;
+      return value.id === item._id ? "fas fa-lg fa-thumbs-up" : acc;
     }, "far fa-lg fa-thumbs-up");
   };
 
   const saveUnSave = (item) => {
     return likeSaveState.playlists.reduce((acc, value) => {
       return value.title === "Watch Later" &&
-        value.videos.some((video) => video.id === item.id)
+        value.videos.some((video) => video.id === item._id)
         ? "fas fa-lg fa-clock"
         : acc;
     }, "far fa-lg fa-clock");
@@ -52,7 +52,7 @@ export const Video = () => {
               height='500px'
               style={{ borderRadius: "0.5rem" }}
               title={video.name}
-              src={`https://www.youtube.com/embed/${video.id}?mute=0`}
+              src={`https://www.youtube.com/embed/${video._id}?mute=0`}
             ></iframe>
           </div>
         </div>
@@ -81,7 +81,7 @@ export const Video = () => {
                 likeSaveState.playlists.reduce(
                   (acc, value) => {
                     return value.title === "Watch Later" &&
-                      value.videos.some((item) => item.id === video.id)
+                      value.videos.some((item) => item.id === video._id)
                       ? acc
                       : likeSaveDispatch({
                           type: "ADD_TO_PLAYLIST",
@@ -109,7 +109,7 @@ export const Video = () => {
               className='btn-card-actions'
               onClick={() => {
                 likeSaveState.likedVideos.reduce((acc, value) => {
-                  return value.id === video.id
+                  return value.id === video._id
                     ? likeSaveDispatch({
                         type: "UNLIKE_VIDEO",
                         payload: video,
