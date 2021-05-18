@@ -7,10 +7,12 @@ import { WatchNext } from "../WatchNext/WatchNext";
 import "./Video.css";
 import { useAuth } from "../Auth";
 import {
+  addNoteToVideo,
   addVideoToLikedVideos,
   addVideoToPlaylist,
   deleteVideoFromLikedVideos,
   deleteVideoFromPlaylist,
+  updateNoteOfVideo,
 } from "../api-calls";
 
 export const Video = () => {
@@ -181,21 +183,37 @@ export const Video = () => {
                 className='btn pink'
                 onClick={() => {
                   setEditNote(!editNote);
+                  const note = likeSaveState.notes.find(
+                    (item) => item.videoId === videoId
+                  );
                   const found = likeSaveState.notes.some(
                     (value) => value.videoId === videoId
                   );
                   found
-                    ? likeSaveDispatch({
-                        type: "SAVE_NOTE",
-                        payload: {
-                          videoId: videoId,
-                          note: inputText,
-                        },
-                      })
-                    : likeSaveDispatch({
-                        type: "ADD_NOTE",
-                        payload: { videoId: videoId, note: inputText },
-                      });
+                    ? updateNoteOfVideo(
+                        user,
+                        note,
+                        inputText,
+                        videoId,
+                        likeSaveDispatch
+                      )
+                    : // likeSaveDispatch({
+                      //     type: "SAVE_NOTE",
+                      //     payload: {
+                      //       videoId: videoId,
+                      //       note: inputText,
+                      //     },
+                      //   })
+                      addNoteToVideo(
+                        user,
+                        inputText,
+                        videoId,
+                        likeSaveDispatch
+                      );
+                  // likeSaveDispatch({
+                  //     type: "ADD_NOTE",
+                  //     payload: { videoId: videoId, note: inputText },
+                  //   });
                 }}
               >
                 {editNote ? "Save Note" : "Edit Note"}

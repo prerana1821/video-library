@@ -215,3 +215,49 @@ export const deleteVideoFromPlaylist = async (
     // dispatch({ type: "STATUS", payload: "" });
   }
 };
+
+export const addNoteToVideo = async (user, note, videoId, dispatch) => {
+  try {
+    // dispatch({ type: "STATUS", payload: "Item Adding to Cart...." });
+    const response = await axios.post(
+      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/notes/${videoId}`,
+      {
+        note: note,
+      }
+    );
+    console.log({ response });
+    if (response.status === 201) {
+      dispatch({ type: "ADD_NOTE", payload: response.data.note });
+    }
+  } catch (error) {
+    // dispatch({ type: "STATUS", payload: "Couldn't add item to cart.." });
+  } finally {
+    // dispatch({ type: "STATUS", payload: "" });
+  }
+};
+
+export const updateNoteOfVideo = async (
+  user,
+  note,
+  noteText,
+  videoId,
+  dispatch
+) => {
+  try {
+    // dispatch({ type: "STATUS", payload: "Item Adding to Cart...." });
+    const response = await axios.post(
+      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/notes/${videoId}/${note._id}`,
+      {
+        note: noteText,
+      }
+    );
+    console.log({ response });
+    if (response.status === 200) {
+      dispatch({ type: "SAVE_NOTE", payload: response.data.note });
+    }
+  } catch (error) {
+    // dispatch({ type: "STATUS", payload: "Couldn't add item to cart.." });
+  } finally {
+    // dispatch({ type: "STATUS", payload: "" });
+  }
+};

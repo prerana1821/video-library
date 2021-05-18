@@ -46,21 +46,16 @@ export const LikeSaveProvider = ({ children }) => {
           }),
         };
       case "ADD_NOTE":
-        console.log("Hello");
         return {
           ...state,
-          notes: state.notes.concat({
-            id: v4(),
-            videoId: action.payload.videoId,
-            note: action.payload.note,
-          }),
+          notes: state.notes.concat(action.payload),
         };
       case "SAVE_NOTE":
         return {
           ...state,
           notes: state.notes.map((item) => {
             return item.videoId === action.payload.videoId
-              ? { ...item, note: action.payload.note }
+              ? action.payload
               : item;
           }),
         };
