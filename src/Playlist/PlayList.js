@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  createPlayListFromApi,
+  deletePlaylistFromApi,
+  deleteVideoFromPlaylist,
+} from "../api-calls";
+import { useAuth } from "../Auth";
 
 import { useLikeSave } from "../Context";
 import "./PlayList.css";
@@ -7,6 +13,7 @@ import "./PlayList.css";
 export const PlayList = () => {
   const [createPlayList, setCreatePlayList] = useState("");
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
+  const { user } = useAuth();
 
   return (
     <div className='showcase-playlist'>
@@ -22,10 +29,11 @@ export const PlayList = () => {
         <button
           className='btn pink'
           onClick={() => {
-            likeSaveDispatch({
-              type: "CREATE_PLAYLIST",
-              payload: createPlayList,
-            });
+            // likeSaveDispatch({
+            //   type: "CREATE_PLAYLIST",
+            //   payload: createPlayList,
+            // });
+            createPlayListFromApi(user, createPlayList, likeSaveDispatch);
             setCreatePlayList("");
           }}
         >
@@ -36,26 +44,27 @@ export const PlayList = () => {
       <div>
         {likeSaveState.playlists.map((playList) => {
           return playList.title !== "Watch Later" ? (
-            <div key={playList.id}>
+            <div key={playList._id}>
               <div className='playlist-info'>
                 <h3>{playList.title}</h3>
                 <button
                   className='btn-icon'
                   onClick={() =>
-                    likeSaveDispatch({
-                      type: "DELETE_PLAYLIST",
-                      payload: playList,
-                    })
+                    // likeSaveDispatch({
+                    //   type: "DELETE_PLAYLIST",
+                    //   payload: playList,
+                    // })
+                    deletePlaylistFromApi(user, playList, likeSaveDispatch)
                   }
                 >
                   <i className='fas fa-2x fa-trash-alt'></i>
                 </button>
               </div>
               <div className='playlist-details'>
-                {playList.videos.map((video) => {
+                {playList.videos.map(({ videoId: video }) => {
                   return (
-                    <Link to={`/video/${video.id}`}>
-                      <div key={video.id} className='card'>
+                    <Link to={`/video/${video._id}`}>
+                      <div key={video._id} className='card'>
                         <img
                           className='thumbnail'
                           src={video.thumbnail}
@@ -68,13 +77,19 @@ export const PlayList = () => {
                             className='btn-icon'
                             onClick={(e) => {
                               e.preventDefault();
-                              likeSaveDispatch({
-                                type: "REMOVE_FROM_PLAYLIST",
-                                payload: {
-                                  selectedPlayList: playList.title,
-                                  selectedVideo: video,
-                                },
-                              });
+                              deleteVideoFromPlaylist(
+                                user,
+                                playList,
+                                video,
+                                likeSaveDispatch
+                              );
+                              // likeSaveDispatch({
+                              //   type: "REMOVE_FROM_PLAYLIST",
+                              //   payload: {
+                              //     selectedPlayList: playList.title,
+                              //     selectedVideo: video,
+                              //   },
+                              // });
                             }}
                           >
                             <i className='fas fa-2x fa-trash-alt'></i>

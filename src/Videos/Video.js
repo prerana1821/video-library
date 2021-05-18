@@ -8,7 +8,9 @@ import "./Video.css";
 import { useAuth } from "../Auth";
 import {
   addVideoToLikedVideos,
+  addVideoToPlaylist,
   deleteVideoFromLikedVideos,
+  deleteVideoFromPlaylist,
 } from "../api-calls";
 
 export const Video = () => {
@@ -22,6 +24,12 @@ export const Video = () => {
   const [inputText, setInputText] = useState("");
   const { user } = useAuth();
 
+  const getWatchLaterPlayList = () => {
+    return likeSaveState.playlists.find((item) => item.title === "Watch Later");
+  };
+
+  console.log(getWatchLaterPlayList());
+
   const likeUnLike = (item) => {
     return likeSaveState.likedVideos.reduce((acc, value) => {
       return value.videoId._id === item._id ? "fas fa-lg fa-thumbs-up" : acc;
@@ -31,7 +39,7 @@ export const Video = () => {
   const saveUnSave = (item) => {
     return likeSaveState.playlists.reduce((acc, value) => {
       return value.title === "Watch Later" &&
-        value.videos.some((video) => video.id === item._id)
+        value.videos.some((video) => video.videoId._id === item._id)
         ? "fas fa-lg fa-clock"
         : acc;
     }, "far fa-lg fa-clock");
@@ -89,21 +97,33 @@ export const Video = () => {
                     return value.title === "Watch Later" &&
                       value.videos.some((item) => item.id === video._id)
                       ? acc
-                      : likeSaveDispatch({
-                          type: "ADD_TO_PLAYLIST",
-                          payload: {
-                            selectedPlayList: "Watch Later",
-                            selectedVideo: video,
-                          },
-                        });
+                      : addVideoToPlaylist(
+                          user,
+                          value,
+                          video,
+                          likeSaveDispatch
+                        );
+                    // likeSaveDispatch({
+                    //     type: "ADD_TO_PLAYLIST",
+                    //     payload: {
+                    //       selectedPlayList: "Watch Later",
+                    //       selectedVideo: video,
+                    //     },
+                    //   });
                   },
-                  likeSaveDispatch({
-                    type: "REMOVE_FROM_PLAYLIST",
-                    payload: {
-                      selectedPlayList: "Watch Later",
-                      selectedVideo: video,
-                    },
-                  })
+                  deleteVideoFromPlaylist(
+                    user,
+                    getWatchLaterPlayList(),
+                    video,
+                    likeSaveDispatch
+                  )
+                  // likeSaveDispatch({
+                  //   type: "REMOVE_FROM_PLAYLIST",
+                  //   payload: {
+                  //     selectedPlayList: "Watch Later",
+                  //     selectedVideo: video,
+                  //   },
+                  // })
                 );
               }}
             >

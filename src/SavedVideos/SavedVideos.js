@@ -1,9 +1,12 @@
 import { useLikeSave } from "../Context";
 import { Link } from "react-router-dom";
 import "./SavedVideos.css";
+import { deleteVideoFromPlaylist } from "../api-calls";
+import { useAuth } from "../Auth";
 
 export const SavedVideos = () => {
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
+  const { user } = useAuth();
 
   return (
     <div>
@@ -21,10 +24,10 @@ export const SavedVideos = () => {
         ) : (
           <div className='show-videos'>
             {playList.title === "Watch Later"
-              ? playList.videos.map((video) => {
+              ? playList.videos.map(({ videoId: video }) => {
                   return (
-                    <Link to={`/video/${video.id}`}>
-                      <div key={video.id} className='card'>
+                    <Link to={`/video/${video._id}`}>
+                      <div key={video._id} className='card'>
                         <img
                           className='thumbnail'
                           src={video.thumbnail}
@@ -37,13 +40,19 @@ export const SavedVideos = () => {
                             className='btn-icon'
                             onClick={(e) => {
                               e.preventDefault();
-                              likeSaveDispatch({
-                                type: "REMOVE_FROM_PLAYLIST",
-                                payload: {
-                                  selectedPlayList: "Watch Later",
-                                  selectedVideo: video,
-                                },
-                              });
+                              // likeSaveDispatch({
+                              //   type: "REMOVE_FROM_PLAYLIST",
+                              //   payload: {
+                              //     selectedPlayList: "Watch Later",
+                              //     selectedVideo: video,
+                              //   },
+                              // });
+                              deleteVideoFromPlaylist(
+                                user,
+                                playList,
+                                video,
+                                likeSaveDispatch
+                              );
                             }}
                           >
                             <i className='fas fa-2x fa-trash-alt'></i>

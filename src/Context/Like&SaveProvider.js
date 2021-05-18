@@ -88,37 +88,23 @@ export const LikeSaveProvider = ({ children }) => {
       case "CREATE_PLAYLIST":
         return {
           ...state,
-          playlists: state.playlists.concat({
-            id: ++playListId,
-            title: action.payload,
-            videos: [],
-          }),
+          playlists: state.playlists.concat(action.payload),
         };
       case "DELETE_PLAYLIST":
         return {
           ...state,
           playlists: state.playlists.filter((item) => {
-            return item.id !== action.payload.id;
+            return item._id !== action.payload._id;
           }),
         };
       case "ADD_TO_PLAYLIST":
         return {
           ...state,
           playlists: state.playlists.map((item) => {
-            return item.title === action.payload.selectedPlayList
-              ? {
-                  ...item,
-                  videos: item.videos.some(
-                    (video) => video.id === action.payload.selectedVideo.id
-                  )
-                    ? item.videos
-                    : item.videos.concat(action.payload.selectedVideo),
-                }
-              : item;
+            return item._id === action.payload._id ? action.payload : item;
           }),
         };
       case "REMOVE_FROM_PLAYLIST":
-        console.log({ action });
         return {
           ...state,
           playlists: state.playlists.map((item) => {
@@ -126,7 +112,8 @@ export const LikeSaveProvider = ({ children }) => {
               ? {
                   ...item,
                   videos: item.videos.filter(
-                    (video) => video.id !== action.payload.selectedVideo.id
+                    (video) =>
+                      video.videoId._id !== action.payload.selectedVideo._id
                   ),
                 }
               : item;

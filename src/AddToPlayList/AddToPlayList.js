@@ -1,4 +1,10 @@
 import React, { useState, useEffect } from "react";
+import {
+  addVideoToPlaylist,
+  createPlayListFromApi,
+  deleteVideoFromPlaylist,
+} from "../api-calls";
+import { useAuth } from "../Auth";
 import { useLikeSave } from "../Context";
 import "./AddToPlayList.css";
 
@@ -6,6 +12,7 @@ export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
   const [addNewPlayList, setAddNewPlayList] = useState("");
   const { likeSaveState, likeSaveDispatch } = useLikeSave();
   const [checkedItems, setCheckedItems] = useState({});
+  const { user } = useAuth();
 
   const handleChange = (event) => {
     setCheckedItems({
@@ -18,20 +25,22 @@ export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
     likeSaveState.playlists.forEach((playList) => {
       if (playList.title in checkedItems) {
         checkedItems[playList.title]
-          ? likeSaveDispatch({
-              type: "ADD_TO_PLAYLIST",
-              payload: {
-                selectedPlayList: playList.title,
-                selectedVideo: video,
-              },
-            })
-          : likeSaveDispatch({
-              type: "REMOVE_FROM_PLAYLIST",
-              payload: {
-                selectedPlayList: playList.title,
-                selectedVideo: video,
-              },
-            });
+          ? addVideoToPlaylist(user, playList, video, likeSaveDispatch)
+          : deleteVideoFromPlaylist(user, playList, video, likeSaveDispatch);
+        // ? likeSaveDispatch({
+        //     type: "ADD_TO_PLAYLIST",
+        //     payload: {
+        //       selectedPlayList: playList.title,
+        //       selectedVideo: video,
+        //     },
+        //   })
+        // : likeSaveDispatch({
+        //   type: "REMOVE_FROM_PLAYLIST",
+        //   payload: {
+        //     selectedPlayList: playList.title,
+        //     selectedVideo: video,
+        //   },
+        // });
       }
     });
   }, [checkedItems]);
@@ -50,7 +59,7 @@ export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
       <div className='show-playlist'>
         {likeSaveState.playlists.map((playList) => {
           return (
-            <p key={playList.id}>
+            <p key={playList._id}>
               <label>
                 <input
                   type='checkbox'
@@ -59,7 +68,9 @@ export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
                   value={playList.title}
                   checked={
                     checkedItems[playList.title] ||
-                    playList.videos.some((item) => item.id === video.id)
+                    playList.videos.some(
+                      (item) => item.videoId._id === video._id
+                    )
                   }
                   onChange={handleChange}
                 />
@@ -83,10 +94,11 @@ export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
         <button
           className='add-playlist-btn'
           onClick={(e) => {
-            likeSaveDispatch({
-              type: "CREATE_PLAYLIST",
-              payload: addNewPlayList,
-            });
+            // likeSaveDispatch({
+            //   type: "CREATE_PLAYLIST",
+            //   payload: addNewPlayList,
+            // });
+            createPlayListFromApi(user, addNewPlayList, likeSaveDispatch);
             setAddNewPlayList("");
           }}
         >
@@ -96,34 +108,3 @@ export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
     </div>
   );
 };
-
-// (event) => {
-//   setCheckedItems({
-//     ...checkedItems,
-//     [event.target.value]: event.target.checked,
-//   });
-//   console.log("called");
-//   likeSaveState.playlists.forEach((playList) => {
-//     console.log(checkedItems);
-//     console.log(playList.title);
-//     // if (checkedItems.hasOwnProperty(playList.title)) {
-//     if (playList.title in checkedItems) {
-//       console.log(checkedItems[playList.title]);
-//       checkedItems[playList.title]
-//         ? likeSaveDispatch({
-//             type: "ADD_TO_PLAYLIST",
-//             payload: {
-//               selectedPlayList: playList.title,
-//               selectedVideo: video,
-//             },
-//           })
-//         : likeSaveDispatch({
-//             type: "REMOVE_FROM_PLAYLIST",
-//             payload: {
-//               selectedPlayList: playList.title,
-//               selectedVideo: video,
-//             },
-//           });
-//     }
-//   });
-// };
