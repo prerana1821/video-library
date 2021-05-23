@@ -19,6 +19,7 @@ import {
   deleteVideoFromPlaylist,
   updateNoteOfVideo,
 } from "../api-calls";
+import { LoginAlert } from "../LoginAlert/LoginAlert";
 
 export const Video = () => {
   const { userDetailsState, userDetailsDispatch } = useUserDetails();
@@ -30,6 +31,11 @@ export const Video = () => {
   const [showNote, setShowNote] = useState(false);
   const [inputText, setInputText] = useState("");
   const { user, login } = useAuth();
+  const [showModal, setShowModal] = useState(false);
+
+  const loginAlert = (msg) => {
+    return setShowModal(true);
+  };
 
   return (
     <div className='video-page'>
@@ -63,30 +69,40 @@ export const Video = () => {
             <label className='choose-playlist'>
               <button
                 className='btn save-playlist-btn'
-                onClick={(e) => {
-                  setAddToPlaylistModal(!addToPlaylistModal);
-                }}
+                onClick={
+                  login
+                    ? () => {
+                        setAddToPlaylistModal(!addToPlaylistModal);
+                      }
+                    : () => {
+                        loginAlert("Hey, you need to login");
+                      }
+                }
               >
                 <i className='fas fa-plus'></i> Save to Play List
               </button>
             </label>
             <button
               className='btn-card-actions'
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                userDetailsState.playlists.reduce((acc, value) => {
-                  return value.title === "Watch Later" &&
-                    value.videos.some((item) => item.id === video._id)
-                    ? acc
-                    : addVideoToPlaylist(
-                        user,
-                        value,
-                        video,
-                        userDetailsDispatch
-                      );
-                }, deleteVideoFromPlaylist(user, getWatchLaterPlayList(userDetailsState), video, userDetailsDispatch));
-              }}
+              onClick={
+                login
+                  ? () => {
+                      userDetailsState.playlists.reduce((acc, value) => {
+                        return value.title === "Watch Later" &&
+                          value.videos.some((item) => item.id === video._id)
+                          ? acc
+                          : addVideoToPlaylist(
+                              user,
+                              value,
+                              video,
+                              userDetailsDispatch
+                            );
+                      }, deleteVideoFromPlaylist(user, getWatchLaterPlayList(userDetailsState), video, userDetailsDispatch));
+                    }
+                  : () => {
+                      loginAlert("Hey, you need to login");
+                    }
+              }
             >
               <div className='avatar av-sm av-pink'>
                 <i className={saveUnSave(video, userDetailsState, login)}></i>
@@ -94,20 +110,23 @@ export const Video = () => {
             </button>
             <button
               className='btn-card-actions'
-              onClick={() => {
-                console.log("Hello");
-                console.log(video);
-                userDetailsState.likedVideos.reduce((acc, value) => {
-                  console.log(value);
-                  return value.videoId._id === video._id
-                    ? deleteVideoFromLikedVideos(
-                        user,
-                        video,
-                        userDetailsDispatch
-                      )
-                    : acc;
-                }, addVideoToLikedVideos(user, video, userDetailsDispatch));
-              }}
+              onClick={
+                login
+                  ? () => {
+                      userDetailsState.likedVideos.reduce((acc, value) => {
+                        return value.videoId._id === video._id
+                          ? deleteVideoFromLikedVideos(
+                              user,
+                              video,
+                              userDetailsDispatch
+                            )
+                          : acc;
+                      }, addVideoToLikedVideos(user, video, userDetailsDispatch));
+                    }
+                  : () => {
+                      loginAlert("Hey, you need to login");
+                    }
+              }
             >
               <div className='avatar av-sm av-pink'>
                 <i className={likeUnLike(video, userDetailsState, login)}></i>
@@ -115,9 +134,15 @@ export const Video = () => {
             </button>
             <button
               className='avatar av-sm av-pink btn'
-              onClick={() => {
-                setShowNote(!showNote);
-              }}
+              onClick={
+                login
+                  ? () => {
+                      setShowNote(!showNote);
+                    }
+                  : () => {
+                      loginAlert("Hey, you need to login");
+                    }
+              }
             >
               {showNote ? (
                 <i className='far fa-lg fa-sticky-note'></i>
@@ -183,6 +208,12 @@ export const Video = () => {
         )}
       </div>
       <WatchNext video={video} />
+      {showModal && (
+        <LoginAlert
+          setShowModal={setShowModal}
+          msg={"Hey, you need to login"}
+        />
+      )}
     </div>
   );
 };

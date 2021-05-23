@@ -1,5 +1,6 @@
-import React from "react";
 import { useData } from "../Context";
+import "./Filters.css";
+import Loading from "./../images/loading.svg";
 
 export const Filters = () => {
   const { data, latestVideos, dispatch, loading } = useData();
@@ -10,13 +11,17 @@ export const Filters = () => {
       <div className='filters'>
         <div>
           <ul className='categories'>
+            <div>
+              {loading && (
+                <img className='loading' src={Loading} alt={Loading} />
+              )}
+            </div>
             <button
               className='category'
               onClick={() => dispatch({ type: "CLEAR_CATEGORY" })}
             >
               <li>All Videos</li>
             </button>
-            <h1>{loading}</h1>
             {categories.map((category) => {
               return (
                 <li

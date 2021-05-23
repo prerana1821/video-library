@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router";
 import { useAuth } from "./AuthProvider";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Loading from "./../images/loading.svg";
 
 export const SignUp = () => {
   const { status, signUpUserWithCredentials } = useAuth();
@@ -164,7 +165,9 @@ export const SignUp = () => {
         Sign Up
       </button>
 
-      <h3>{status}</h3>
+      <h3>
+        {status && <img className='loading' src={Loading} alt={Loading} />}
+      </h3>
     </div>
   );
 };

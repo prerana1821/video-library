@@ -1,0 +1,19 @@
+@media (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+  }
+
+  .categories {
+    flex-direction: column;
+  }
+}
+
+.loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 10;
+}
