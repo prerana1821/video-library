@@ -1,2 +1,2 @@
 export { DataProvider, useData } from "./DataProvider";
-export { LikeSaveProvider, useLikeSave } from "./Like&SaveProvider";
+export { UserDetailsProvider, useUserDetails } from "./UserDetailsProvider";

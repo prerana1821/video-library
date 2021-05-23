@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { useLikeSave, useData } from "../Context";
+import { useUserDetails, useData } from "../Context";
 import { useState } from "react";
 import Markdown from "react-remarkable";
 import { AddToPlayList } from "../AddToPlayList/AddToPlayList";
@@ -16,7 +16,7 @@ import {
 } from "../api-calls";
 
 export const Video = () => {
-  const { likeSaveState, likeSaveDispatch } = useLikeSave();
+  const { userDetailsState, userDetailsDispatch } = useUserDetails();
   const { videoId } = useParams();
   const { data } = useData();
   const video = data.find((video) => video._id === videoId);
@@ -27,19 +27,21 @@ export const Video = () => {
   const { user } = useAuth();
 
   const getWatchLaterPlayList = () => {
-    return likeSaveState.playlists.find((item) => item.title === "Watch Later");
+    return userDetailsState.playlists.find(
+      (item) => item.title === "Watch Later"
+    );
   };
 
   console.log(getWatchLaterPlayList());
 
   const likeUnLike = (item) => {
-    return likeSaveState.likedVideos.reduce((acc, value) => {
+    return userDetailsState.likedVideos.reduce((acc, value) => {
       return value.videoId._id === item._id ? "fas fa-lg fa-thumbs-up" : acc;
     }, "far fa-lg fa-thumbs-up");
   };
 
   const saveUnSave = (item) => {
-    return likeSaveState.playlists.reduce((acc, value) => {
+    return userDetailsState.playlists.reduce((acc, value) => {
       return value.title === "Watch Later" &&
         value.videos.some((video) => video.videoId._id === item._id)
         ? "fas fa-lg fa-clock"
@@ -94,7 +96,7 @@ export const Video = () => {
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
-                likeSaveState.playlists.reduce(
+                userDetailsState.playlists.reduce(
                   (acc, value) => {
                     return value.title === "Watch Later" &&
                       value.videos.some((item) => item.id === video._id)
@@ -103,9 +105,9 @@ export const Video = () => {
                           user,
                           value,
                           video,
-                          likeSaveDispatch
+                          userDetailsDispatch
                         );
-                    // likeSaveDispatch({
+                    // userDetailsDispatch({
                     //     type: "ADD_TO_PLAYLIST",
                     //     payload: {
                     //       selectedPlayList: "Watch Later",
@@ -117,9 +119,9 @@ export const Video = () => {
                     user,
                     getWatchLaterPlayList(),
                     video,
-                    likeSaveDispatch
+                    userDetailsDispatch
                   )
-                  // likeSaveDispatch({
+                  // userDetailsDispatch({
                   //   type: "REMOVE_FROM_PLAYLIST",
                   //   payload: {
                   //     selectedPlayList: "Watch Later",
@@ -138,12 +140,16 @@ export const Video = () => {
               onClick={() => {
                 console.log("Hello");
                 console.log(video);
-                likeSaveState.likedVideos.reduce((acc, value) => {
+                userDetailsState.likedVideos.reduce((acc, value) => {
                   console.log(value);
                   return value.videoId._id === video._id
-                    ? deleteVideoFromLikedVideos(user, video, likeSaveDispatch)
+                    ? deleteVideoFromLikedVideos(
+                        user,
+                        video,
+                        userDetailsDispatch
+                      )
                     : acc;
-                }, addVideoToLikedVideos(user, video, likeSaveDispatch));
+                }, addVideoToLikedVideos(user, video, userDetailsDispatch));
               }}
             >
               <div className='avatar av-sm av-pink'>
@@ -183,10 +189,10 @@ export const Video = () => {
                 className='btn pink'
                 onClick={() => {
                   setEditNote(!editNote);
-                  const note = likeSaveState.notes.find(
+                  const note = userDetailsState.notes.find(
                     (item) => item.videoId === videoId
                   );
-                  const found = likeSaveState.notes.some(
+                  const found = userDetailsState.notes.some(
                     (value) => value.videoId === videoId
                   );
                   found
@@ -195,9 +201,9 @@ export const Video = () => {
                         note,
                         inputText,
                         videoId,
-                        likeSaveDispatch
+                        userDetailsDispatch
                       )
-                    : // likeSaveDispatch({
+                    : // userDetailsDispatch({
                       //     type: "SAVE_NOTE",
                       //     payload: {
                       //       videoId: videoId,
@@ -208,9 +214,9 @@ export const Video = () => {
                         user,
                         inputText,
                         videoId,
-                        likeSaveDispatch
+                        userDetailsDispatch
                       );
-                  // likeSaveDispatch({
+                  // userDetailsDispatch({
                   //     type: "ADD_NOTE",
                   //     payload: { videoId: videoId, note: inputText },
                   //   });

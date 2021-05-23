@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { DataProvider, LikeSaveProvider } from "./Context";
+import { DataProvider, UserDetailsProvider } from "./Context";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { AuthProvider } from "./Auth/AuthProvider";
@@ -10,9 +10,9 @@ ReactDOM.render(
     <Router>
       <AuthProvider>
         <DataProvider>
-          <LikeSaveProvider>
+          <UserDetailsProvider>
             <App />
-          </LikeSaveProvider>
+          </UserDetailsProvider>
         </DataProvider>
       </AuthProvider>
     </Router>

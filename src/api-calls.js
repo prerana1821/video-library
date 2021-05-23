@@ -3,9 +3,6 @@ import axios from "axios";
 export const addVideoToLikedVideos = async (user, video, dispatch) => {
   try {
     // dispatch({ type: "STATUS", payload: "Item Adding to Cart...." });
-
-    console.log("here");
-
     const response = await axios.post(
       `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/likedVideos`,
       {
@@ -24,7 +21,6 @@ export const addVideoToLikedVideos = async (user, video, dispatch) => {
 };
 
 export const deleteVideoFromLikedVideos = async (user, video, dispatch) => {
-  console.log("cool");
   try {
     // dispatch({
     //   type: "STATUS",
@@ -136,7 +132,6 @@ export const createPlayListFromApi = async (user, playlistTitle, dispatch) => {
 };
 
 export const deletePlaylistFromApi = async (user, playlist, dispatch) => {
-  console.log("comme");
   try {
     // dispatch({
     //   type: "STATUS",

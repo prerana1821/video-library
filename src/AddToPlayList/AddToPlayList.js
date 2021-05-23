@@ -5,12 +5,12 @@ import {
   deleteVideoFromPlaylist,
 } from "../api-calls";
 import { useAuth } from "../Auth";
-import { useLikeSave } from "../Context";
+import { useUserDetails } from "../Context";
 import "./AddToPlayList.css";
 
 export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
   const [addNewPlayList, setAddNewPlayList] = useState("");
-  const { likeSaveState, likeSaveDispatch } = useLikeSave();
+  const { userDetailsState, userDetailsDispatch } = useUserDetails();
   const [checkedItems, setCheckedItems] = useState({});
   const { user } = useAuth();
 
@@ -22,19 +22,19 @@ export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
   };
 
   useEffect(() => {
-    likeSaveState.playlists.forEach((playList) => {
+    userDetailsState.playlists.forEach((playList) => {
       if (playList.title in checkedItems) {
         checkedItems[playList.title]
-          ? addVideoToPlaylist(user, playList, video, likeSaveDispatch)
-          : deleteVideoFromPlaylist(user, playList, video, likeSaveDispatch);
-        // ? likeSaveDispatch({
+          ? addVideoToPlaylist(user, playList, video, userDetailsDispatch)
+          : deleteVideoFromPlaylist(user, playList, video, userDetailsDispatch);
+        // ? userDetailsDispatch({
         //     type: "ADD_TO_PLAYLIST",
         //     payload: {
         //       selectedPlayList: playList.title,
         //       selectedVideo: video,
         //     },
         //   })
-        // : likeSaveDispatch({
+        // : userDetailsDispatch({
         //   type: "REMOVE_FROM_PLAYLIST",
         //   payload: {
         //     selectedPlayList: playList.title,
@@ -57,7 +57,7 @@ export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
         </button>
       </div>
       <div className='show-playlist'>
-        {likeSaveState.playlists.map((playList) => {
+        {userDetailsState.playlists.map((playList) => {
           return (
             <p key={playList._id}>
               <label>
@@ -94,11 +94,11 @@ export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
         <button
           className='add-playlist-btn'
           onClick={(e) => {
-            // likeSaveDispatch({
+            // userDetailsDispatch({
             //   type: "CREATE_PLAYLIST",
             //   payload: addNewPlayList,
             // });
-            createPlayListFromApi(user, addNewPlayList, likeSaveDispatch);
+            createPlayListFromApi(user, addNewPlayList, userDetailsDispatch);
             setAddNewPlayList("");
           }}
         >

@@ -1,16 +1,16 @@
-import { useLikeSave } from "../Context";
+import { useUserDetails } from "../Context";
 import { Link } from "react-router-dom";
 import "./SavedVideos.css";
 import { deleteVideoFromPlaylist } from "../api-calls";
 import { useAuth } from "../Auth";
 
 export const SavedVideos = () => {
-  const { likeSaveState, likeSaveDispatch } = useLikeSave();
+  const { userDetailsState, userDetailsDispatch } = useUserDetails();
   const { user } = useAuth();
 
   return (
     <div>
-      {likeSaveState.playlists.map((playList) => {
+      {userDetailsState.playlists.map((playList) => {
         return playList.title === "Watch Later" &&
           playList.videos.length === 0 ? (
           <div className='card empty-card'>
@@ -40,7 +40,7 @@ export const SavedVideos = () => {
                             className='btn-icon'
                             onClick={(e) => {
                               e.preventDefault();
-                              // likeSaveDispatch({
+                              // userDetailsDispatch({
                               //   type: "REMOVE_FROM_PLAYLIST",
                               //   payload: {
                               //     selectedPlayList: "Watch Later",
@@ -51,7 +51,7 @@ export const SavedVideos = () => {
                                 user,
                                 playList,
                                 video,
-                                likeSaveDispatch
+                                userDetailsDispatch
                               );
                             }}
                           >

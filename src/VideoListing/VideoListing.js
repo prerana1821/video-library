@@ -1,4 +1,4 @@
-import { useLikeSave, useData } from "../Context";
+import { useUserDetails, useData } from "../Context";
 import { Link } from "react-router-dom";
 import "./VideoListing.css";
 import { useAuth } from "../Auth";
@@ -10,12 +10,12 @@ import {
 
 export const VideoListing = () => {
   const { data, latestVideos, categoryData, dispatch, loading } = useData();
-  const { likeSaveState, likeSaveDispatch } = useLikeSave();
+  const { userDetailsState, userDetailsDispatch } = useUserDetails();
   const { user } = useAuth();
   const categories = [...new Set(data.map((item) => item.category))];
 
   const saveUnSave = (item) => {
-    return likeSaveState.playlists.reduce((acc, value) => {
+    return userDetailsState.playlists.reduce((acc, value) => {
       return value.title === "Watch Later" &&
         value.videos.some((video) => video.videoId._id === item._id)
         ? "fas fa-lg fa-clock"
@@ -24,7 +24,9 @@ export const VideoListing = () => {
   };
 
   const getWatchLaterPlayList = () => {
-    return likeSaveState.playlists.find((item) => item.title === "Watch Later");
+    return userDetailsState.playlists.find(
+      (item) => item.title === "Watch Later"
+    );
   };
 
   console.log(getWatchLaterPlayList());
@@ -72,8 +74,8 @@ export const VideoListing = () => {
             <Link to={`video/${video._id}`}>
               <div
                 onClick={
-                  () => addVideoToHistory(user, video, likeSaveDispatch)
-                  // likeSaveDispatch({ type: "ADD_TO_HISTORY", payload: video })
+                  () => addVideoToHistory(user, video, userDetailsDispatch)
+                  // userDetailsDispatch({ type: "ADD_TO_HISTORY", payload: video })
                 }
                 key={video._id}
                 className='card'
@@ -91,7 +93,7 @@ export const VideoListing = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                       e.preventDefault();
-                      likeSaveState.playlists.reduce(
+                      userDetailsState.playlists.reduce(
                         (acc, value) => {
                           return value.title === "Watch Later" &&
                             value.videos.some(
@@ -102,9 +104,9 @@ export const VideoListing = () => {
                                 user,
                                 value,
                                 video,
-                                likeSaveDispatch
+                                userDetailsDispatch
                               );
-                          // likeSaveDispatch({
+                          // userDetailsDispatch({
                           //     type: "ADD_TO_PLAYLIST",
                           //     payload: {
                           //       selectedPlayList: "Watch Later",
@@ -116,9 +118,9 @@ export const VideoListing = () => {
                           user,
                           getWatchLaterPlayList(),
                           video,
-                          likeSaveDispatch
+                          userDetailsDispatch
                         )
-                        // likeSaveDispatch({
+                        // userDetailsDispatch({
                         //   type: "REMOVE_FROM_PLAYLIST",
                         //   payload: {
                         //     selectedPlayList: "Watch Later",

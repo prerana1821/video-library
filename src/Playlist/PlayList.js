@@ -7,12 +7,12 @@ import {
 } from "../api-calls";
 import { useAuth } from "../Auth";
 
-import { useLikeSave } from "../Context";
+import { useUserDetails } from "../Context";
 import "./PlayList.css";
 
 export const PlayList = () => {
   const [createPlayList, setCreatePlayList] = useState("");
-  const { likeSaveState, likeSaveDispatch } = useLikeSave();
+  const { userDetailsState, userDetailsDispatch } = useUserDetails();
   const { user } = useAuth();
 
   return (
@@ -29,11 +29,11 @@ export const PlayList = () => {
         <button
           className='btn pink'
           onClick={() => {
-            // likeSaveDispatch({
+            // userDetailsDispatch({
             //   type: "CREATE_PLAYLIST",
             //   payload: createPlayList,
             // });
-            createPlayListFromApi(user, createPlayList, likeSaveDispatch);
+            createPlayListFromApi(user, createPlayList, userDetailsDispatch);
             setCreatePlayList("");
           }}
         >
@@ -42,7 +42,7 @@ export const PlayList = () => {
       </div>
 
       <div>
-        {likeSaveState.playlists.map((playList) => {
+        {userDetailsState.playlists.map((playList) => {
           return playList.title !== "Watch Later" ? (
             <div key={playList._id}>
               <div className='playlist-info'>
@@ -50,11 +50,11 @@ export const PlayList = () => {
                 <button
                   className='btn-icon'
                   onClick={() =>
-                    // likeSaveDispatch({
+                    // userDetailsDispatch({
                     //   type: "DELETE_PLAYLIST",
                     //   payload: playList,
                     // })
-                    deletePlaylistFromApi(user, playList, likeSaveDispatch)
+                    deletePlaylistFromApi(user, playList, userDetailsDispatch)
                   }
                 >
                   <i className='fas fa-2x fa-trash-alt'></i>
@@ -81,9 +81,9 @@ export const PlayList = () => {
                                 user,
                                 playList,
                                 video,
-                                likeSaveDispatch
+                                userDetailsDispatch
                               );
-                              // likeSaveDispatch({
+                              // userDetailsDispatch({
                               //   type: "REMOVE_FROM_PLAYLIST",
                               //   payload: {
                               //     selectedPlayList: playList.title,

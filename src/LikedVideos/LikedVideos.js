@@ -1,15 +1,15 @@
-import { useLikeSave } from "../Context";
+import { useUserDetails } from "../Context";
 import { Link } from "react-router-dom";
 import { deleteVideoFromLikedVideos } from "../api-calls";
 import { useAuth } from "../Auth";
 
 export const LikedVideos = () => {
   const { user } = useAuth();
-  const { likeSaveState, likeSaveDispatch } = useLikeSave();
+  const { userDetailsState, userDetailsDispatch } = useUserDetails();
 
   return (
     <div>
-      {likeSaveState.likedVideos.length === 0 ? (
+      {userDetailsState.likedVideos.length === 0 ? (
         <div className='card empty-card'>
           <h3>No Liked Videos</h3>
           <hr className='hr' />
@@ -20,7 +20,7 @@ export const LikedVideos = () => {
         </div>
       ) : (
         <div className='show-videos'>
-          {likeSaveState.likedVideos.map(({ videoId: video }) => {
+          {userDetailsState.likedVideos.map(({ videoId: video }) => {
             return (
               <Link to={`/video/${video.id}`}>
                 <div key={video.id} className='card'>
@@ -39,9 +39,9 @@ export const LikedVideos = () => {
                         deleteVideoFromLikedVideos(
                           user,
                           video,
-                          likeSaveDispatch
+                          userDetailsDispatch
                         );
-                        // likeSaveDispatch({
+                        // userDetailsDispatch({
                         //   type: "UNLIKE_VIDEO",
                         //   payload: video,
                         // });
