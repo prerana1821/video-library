@@ -33,6 +33,7 @@ export const UserDetailsProvider = ({ children }) => {
   const [userDetailsState, userDetailsDispatch] = useReducer(
     userDetailsReducer,
     {
+      loading: "",
       likedVideos: [],
       history: [],
       notes: [],

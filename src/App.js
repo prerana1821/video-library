@@ -8,11 +8,16 @@ import { Video } from "./Videos";
 import { History } from "./History";
 import { Login, PrivateRoute, SignUp } from "./Auth";
 import { Account } from "./Auth/Account";
+import { useUserDetails } from "./Context";
+import { Toast } from "./Toast";
+import { BottomToTop } from "./BottomToTop";
 import "./App.css";
 
 function App() {
+  const { userDetailsState } = useUserDetails();
+
   return (
-    <div className='App'>
+    <div className='App' id='top'>
       <Header />
       <div className='main'>
         <Routes>
@@ -32,6 +37,8 @@ function App() {
             element={<SavedVideos />}
           ></PrivateRoute>
         </Routes>
+        {userDetailsState?.loading && <Toast />}
+        <BottomToTop />
       </div>
     </div>
   );

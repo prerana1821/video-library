@@ -35,18 +35,24 @@ export const Video = () => {
   console.log(getWatchLaterPlayList());
 
   const likeUnLike = (item) => {
-    return userDetailsState.likedVideos.reduce((acc, value) => {
-      return value.videoId._id === item._id ? "fas fa-lg fa-thumbs-up" : acc;
-    }, "far fa-lg fa-thumbs-up");
+    return user
+      ? userDetailsState.likedVideos.reduce((acc, value) => {
+          return value.videoId._id === item._id
+            ? "fas fa-lg fa-thumbs-up"
+            : acc;
+        }, "far fa-lg fa-thumbs-up")
+      : "far fa-lg fa-thumbs-up";
   };
 
   const saveUnSave = (item) => {
-    return userDetailsState.playlists.reduce((acc, value) => {
-      return value.title === "Watch Later" &&
-        value.videos.some((video) => video.videoId._id === item._id)
-        ? "fas fa-lg fa-clock"
-        : acc;
-    }, "far fa-lg fa-clock");
+    return user
+      ? userDetailsState.playlists.reduce((acc, value) => {
+          return value.title === "Watch Later" &&
+            value.videos.some((video) => video.videoId._id === item._id)
+            ? "fas fa-lg fa-clock"
+            : acc;
+        }, "far fa-lg fa-clock")
+      : "far fa-lg fa-clock";
   };
 
   return (
