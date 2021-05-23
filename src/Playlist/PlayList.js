@@ -29,10 +29,6 @@ export const PlayList = () => {
         <button
           className='btn pink'
           onClick={() => {
-            // userDetailsDispatch({
-            //   type: "CREATE_PLAYLIST",
-            //   payload: createPlayList,
-            // });
             createPlayListFromApi(user, createPlayList, userDetailsDispatch);
             setCreatePlayList("");
           }}
@@ -83,13 +79,6 @@ export const PlayList = () => {
                                 video,
                                 userDetailsDispatch
                               );
-                              // userDetailsDispatch({
-                              //   type: "REMOVE_FROM_PLAYLIST",
-                              //   payload: {
-                              //     selectedPlayList: playList.title,
-                              //     selectedVideo: video,
-                              //   },
-                              // });
                             }}
                           >
                             <i className='fas fa-2x fa-trash-alt'></i>

@@ -9,90 +9,29 @@ import {
   deleteVideoFromPlaylist,
 } from "../api-calls";
 import { LoginAlert } from "../LoginAlert/LoginAlert";
+import { Filters } from "../Fliters/Filters";
+import { getWatchLaterPlayList, saveUnSave } from "../utils/viewOperations";
 
 export const VideoListing = () => {
-  const { data, latestVideos, categoryData, dispatch, loading } = useData();
+  const { categoryData } = useData();
   const { userDetailsState, userDetailsDispatch } = useUserDetails();
   const { login, user } = useAuth();
   const [showModal, setShowModal] = useState(false);
-  const categories = [...new Set(data.map((item) => item.category))];
 
   const loginAlert = (msg) => {
-    console.log("alert");
     return setShowModal(true);
   };
 
-  const saveUnSave = (item) => {
-    return user
-      ? userDetailsState.playlists.reduce((acc, value) => {
-          return value.title === "Watch Later" &&
-            value.videos.some((video) => video.videoId._id === item._id)
-            ? "fas fa-lg fa-clock"
-            : acc;
-        }, "far fa-lg fa-clock")
-      : "far fa-lg fa-clock";
-  };
-
-  const getWatchLaterPlayList = () => {
-    return userDetailsState.playlists.find(
-      (item) => item.title === "Watch Later"
-    );
-  };
-
-  console.log(getWatchLaterPlayList());
-
   return (
     <div>
-      <div className='filters'>
-        <div>
-          <ul className='categories'>
-            <button
-              className='category'
-              onClick={() => dispatch({ type: "CLEAR_CATEGORY" })}
-            >
-              <li>All Videos</li>
-            </button>
-            <h1>{loading}</h1>
-            {categories.map((category) => {
-              return (
-                <li
-                  className='category'
-                  onClick={() => {
-                    console.log(category);
-                    dispatch({ type: "VIEW_BY_CATEGORY", payload: category });
-                  }}
-                  key={category}
-                >
-                  {category}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <label className='btn-latest'>
-          <input
-            type='checkbox'
-            checked={latestVideos}
-            onChange={() => dispatch({ type: "VIEW_LATEST" })}
-          />
-          Latest Videos
-        </label>
-      </div>
+      <Filters />
       <div className='videos'>
         {categoryData.map((video) => {
           return (
             <Link to={`video/${video._id}`}>
               <div
-                onClick={
-                  login
-                    ? () => addVideoToHistory(user, video, userDetailsDispatch)
-                    : (e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        loginAlert(
-                          "Hey, you need to login in order to add video to watch later"
-                        );
-                      }
+                onClick={() =>
+                  addVideoToHistory(user, video, userDetailsDispatch)
                 }
                 key={video._id}
                 className='card'
@@ -124,7 +63,7 @@ export const VideoListing = () => {
                                     video,
                                     userDetailsDispatch
                                   );
-                            }, deleteVideoFromPlaylist(user, getWatchLaterPlayList(), video, userDetailsDispatch));
+                            }, deleteVideoFromPlaylist(user, getWatchLaterPlayList(userDetailsState), video, userDetailsDispatch));
                           }
                         : (e) => {
                             e.stopPropagation();
@@ -136,7 +75,9 @@ export const VideoListing = () => {
                     }
                   >
                     <div className='avatar av-sm av-pink'>
-                      <i className={saveUnSave(video)}></i>
+                      <i
+                        className={saveUnSave(video, userDetailsState, login)}
+                      ></i>
                     </div>
                   </button>
                 </div>

@@ -96,9 +96,6 @@ export const AuthProvider = ({ children }) => {
     navigate("/");
   };
 
-  console.log({ user });
-  console.log({ login });
-
   return (
     <AuthContext.Provider
       value={{

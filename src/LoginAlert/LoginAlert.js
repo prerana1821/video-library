@@ -4,8 +4,6 @@ import "./LoginAlert.css";
 export const LoginAlert = ({ msg, setShowModal }) => {
   const navigate = useNavigate();
 
-  console.log("works");
-
   return (
     <div className='modal login-alert'>
       <div className='modal-header'>

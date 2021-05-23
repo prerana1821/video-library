@@ -8,9 +8,6 @@ export const History = () => {
   const { userDetailsState, userDetailsDispatch } = useUserDetails();
   const { user } = useAuth();
 
-  console.log("noo");
-  console.log({ userDetailsState });
-
   return (
     <div>
       {userDetailsState.history.length === 0 ? (

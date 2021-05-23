@@ -5,6 +5,11 @@ import Markdown from "react-remarkable";
 import { AddToPlayList } from "../AddToPlayList/AddToPlayList";
 import { WatchNext } from "../WatchNext/WatchNext";
 import "./Video.css";
+import {
+  getWatchLaterPlayList,
+  likeUnLike,
+  saveUnSave,
+} from "../utils/viewOperations";
 import { useAuth } from "../Auth";
 import {
   addNoteToVideo,
@@ -24,36 +29,7 @@ export const Video = () => {
   const [editNote, setEditNote] = useState(true);
   const [showNote, setShowNote] = useState(false);
   const [inputText, setInputText] = useState("");
-  const { user } = useAuth();
-
-  const getWatchLaterPlayList = () => {
-    return userDetailsState.playlists.find(
-      (item) => item.title === "Watch Later"
-    );
-  };
-
-  console.log(getWatchLaterPlayList());
-
-  const likeUnLike = (item) => {
-    return user
-      ? userDetailsState.likedVideos.reduce((acc, value) => {
-          return value.videoId._id === item._id
-            ? "fas fa-lg fa-thumbs-up"
-            : acc;
-        }, "far fa-lg fa-thumbs-up")
-      : "far fa-lg fa-thumbs-up";
-  };
-
-  const saveUnSave = (item) => {
-    return user
-      ? userDetailsState.playlists.reduce((acc, value) => {
-          return value.title === "Watch Later" &&
-            value.videos.some((video) => video.videoId._id === item._id)
-            ? "fas fa-lg fa-clock"
-            : acc;
-        }, "far fa-lg fa-clock")
-      : "far fa-lg fa-clock";
-  };
+  const { user, login } = useAuth();
 
   return (
     <div className='video-page'>
@@ -66,10 +42,7 @@ export const Video = () => {
             />
           </div>
         )}
-        <div
-          className='video-notes'
-          // onClick={addToPlaylistModal ? () => setAddToPlaylistModal(false) : null}
-        >
+        <div className='video-notes'>
           <div className='video'>
             <iframe
               width='100%'
@@ -102,43 +75,21 @@ export const Video = () => {
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
-                userDetailsState.playlists.reduce(
-                  (acc, value) => {
-                    return value.title === "Watch Later" &&
-                      value.videos.some((item) => item.id === video._id)
-                      ? acc
-                      : addVideoToPlaylist(
-                          user,
-                          value,
-                          video,
-                          userDetailsDispatch
-                        );
-                    // userDetailsDispatch({
-                    //     type: "ADD_TO_PLAYLIST",
-                    //     payload: {
-                    //       selectedPlayList: "Watch Later",
-                    //       selectedVideo: video,
-                    //     },
-                    //   });
-                  },
-                  deleteVideoFromPlaylist(
-                    user,
-                    getWatchLaterPlayList(),
-                    video,
-                    userDetailsDispatch
-                  )
-                  // userDetailsDispatch({
-                  //   type: "REMOVE_FROM_PLAYLIST",
-                  //   payload: {
-                  //     selectedPlayList: "Watch Later",
-                  //     selectedVideo: video,
-                  //   },
-                  // })
-                );
+                userDetailsState.playlists.reduce((acc, value) => {
+                  return value.title === "Watch Later" &&
+                    value.videos.some((item) => item.id === video._id)
+                    ? acc
+                    : addVideoToPlaylist(
+                        user,
+                        value,
+                        video,
+                        userDetailsDispatch
+                      );
+                }, deleteVideoFromPlaylist(user, getWatchLaterPlayList(userDetailsState), video, userDetailsDispatch));
               }}
             >
               <div className='avatar av-sm av-pink'>
-                <i className={saveUnSave(video)}></i>
+                <i className={saveUnSave(video, userDetailsState, login)}></i>
               </div>
             </button>
             <button
@@ -159,7 +110,7 @@ export const Video = () => {
               }}
             >
               <div className='avatar av-sm av-pink'>
-                <i className={likeUnLike(video)}></i>
+                <i className={likeUnLike(video, userDetailsState, login)}></i>
               </div>
             </button>
             <button
@@ -209,23 +160,12 @@ export const Video = () => {
                         videoId,
                         userDetailsDispatch
                       )
-                    : // userDetailsDispatch({
-                      //     type: "SAVE_NOTE",
-                      //     payload: {
-                      //       videoId: videoId,
-                      //       note: inputText,
-                      //     },
-                      //   })
-                      addNoteToVideo(
+                    : addNoteToVideo(
                         user,
                         inputText,
                         videoId,
                         userDetailsDispatch
                       );
-                  // userDetailsDispatch({
-                  //     type: "ADD_NOTE",
-                  //     payload: { videoId: videoId, note: inputText },
-                  //   });
                 }}
               >
                 {editNote ? "Save Note" : "Edit Note"}

@@ -27,20 +27,6 @@ export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
         checkedItems[playList.title]
           ? addVideoToPlaylist(user, playList, video, userDetailsDispatch)
           : deleteVideoFromPlaylist(user, playList, video, userDetailsDispatch);
-        // ? userDetailsDispatch({
-        //     type: "ADD_TO_PLAYLIST",
-        //     payload: {
-        //       selectedPlayList: playList.title,
-        //       selectedVideo: video,
-        //     },
-        //   })
-        // : userDetailsDispatch({
-        //   type: "REMOVE_FROM_PLAYLIST",
-        //   payload: {
-        //     selectedPlayList: playList.title,
-        //     selectedVideo: video,
-        //   },
-        // });
       }
     });
   }, [checkedItems]);
@@ -94,10 +80,6 @@ export const AddToPlayList = ({ setAddToPlaylistModal, video }) => {
         <button
           className='add-playlist-btn'
           onClick={(e) => {
-            // userDetailsDispatch({
-            //   type: "CREATE_PLAYLIST",
-            //   payload: addNewPlayList,
-            // });
             createPlayListFromApi(user, addNewPlayList, userDetailsDispatch);
             setAddNewPlayList("");
           }}

@@ -40,13 +40,6 @@ export const SavedVideos = () => {
                             className='btn-icon'
                             onClick={(e) => {
                               e.preventDefault();
-                              // userDetailsDispatch({
-                              //   type: "REMOVE_FROM_PLAYLIST",
-                              //   payload: {
-                              //     selectedPlayList: "Watch Later",
-                              //     selectedVideo: video,
-                              //   },
-                              // });
                               deleteVideoFromPlaylist(
                                 user,
                                 playList,
