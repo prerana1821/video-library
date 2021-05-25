@@ -21,15 +21,23 @@ import {
 } from "../api-calls";
 import { LoginAlert } from "../LoginAlert/LoginAlert";
 
+let defaultNoteState = "";
+
 export const Video = () => {
   const { userDetailsState, userDetailsDispatch } = useUserDetails();
   const { videoId } = useParams();
   const { data } = useData();
   const video = data.find((video) => video._id === videoId);
   const [addToPlaylistModal, setAddToPlaylistModal] = useState(false);
+  if (videoId) {
+    const foundNote = userDetailsState.notes.find((note) => {
+      return note.videoId === videoId;
+    });
+    defaultNoteState = foundNote.note;
+  }
   const [editNote, setEditNote] = useState(true);
   const [showNote, setShowNote] = useState(false);
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState(defaultNoteState);
   const { user, login } = useAuth();
   const [showModal, setShowModal] = useState(false);
 
@@ -93,7 +101,7 @@ export const Video = () => {
                           ? acc
                           : addVideoToPlaylist(
                               user,
-                              value,
+                              getWatchLaterPlayList(userDetailsState),
                               video,
                               userDetailsDispatch
                             );

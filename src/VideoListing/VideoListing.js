@@ -59,7 +59,7 @@ export const VideoListing = () => {
                                 ? acc
                                 : addVideoToPlaylist(
                                     user,
-                                    value,
+                                    getWatchLaterPlayList(userDetailsState),
                                     video,
                                     userDetailsDispatch
                                   );

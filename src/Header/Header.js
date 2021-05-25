@@ -53,7 +53,7 @@ export const Header = () => {
                     dispatch({ type: "CLEAR_SEARCH" });
                   }}
                 >
-                  Clear Search
+                  Clear
                 </button>
               )}
             </div>
