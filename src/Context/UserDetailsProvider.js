@@ -21,10 +21,8 @@ export const UserDetailsProvider = ({ children }) => {
         } catch (error) {
           userDetailsDispatch({
             type: "STATUS",
-            payload: "Sorry, try again later..",
+            payload: { error: "Sorry, try again later.." },
           });
-        } finally {
-          userDetailsDispatch({ type: "STATUS", payload: "" });
         }
       })();
     }
@@ -33,7 +31,7 @@ export const UserDetailsProvider = ({ children }) => {
   const [userDetailsState, userDetailsDispatch] = useReducer(
     userDetailsReducer,
     {
-      loading: "",
+      loading: { loading: "", success: "", error: "" },
       likedVideos: [],
       history: [],
       notes: [],

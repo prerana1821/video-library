@@ -13,17 +13,25 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       try {
-        dispatch({ type: "STATUS", payload: "Loading data from server..." });
+        dispatch({
+          type: "STATUS",
+          payload: { loading: "Loading data from server..." },
+        });
         const response = await axios.get(
           "https://api-pretube.prerananawar1.repl.co/videos"
         );
         console.log({ response });
         const data = response.data.videos;
         dispatch({ type: "ADD_DATA", payload: data });
+        dispatch({
+          type: "STATUS",
+          payload: { loading: "" },
+        });
       } catch (error) {
-        dispatch({ type: "STATUS", payload: "Sorry, try again later.." });
-      } finally {
-        dispatch({ type: "STATUS", payload: "" });
+        dispatch({
+          type: "STATUS",
+          payload: { error: "Sorry, try again later.." },
+        });
       }
     })();
   }, []);
@@ -36,7 +44,7 @@ export const DataProvider = ({ children }) => {
     latestVideos: false,
     viewByCategory: "",
     searchString: "",
-    loading: "",
+    loading: { loading: "", success: "", error: "" },
   });
 
   const searchedData = getSearchedData(data, searchString);

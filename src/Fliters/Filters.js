@@ -12,7 +12,7 @@ export const Filters = () => {
         <div>
           <ul className='categories'>
             <div>
-              {loading && (
+              {loading.loading && (
                 <img className='loading' src={Loading} alt={Loading} />
               )}
             </div>

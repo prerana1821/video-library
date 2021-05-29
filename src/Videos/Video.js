@@ -33,7 +33,7 @@ export const Video = () => {
     const foundNote = userDetailsState.notes.find((note) => {
       return note.videoId === videoId;
     });
-    defaultNoteState = foundNote.note;
+    defaultNoteState = foundNote ? foundNote.note : "";
   }
   const [editNote, setEditNote] = useState(true);
   const [showNote, setShowNote] = useState(false);

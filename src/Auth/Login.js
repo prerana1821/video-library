@@ -16,12 +16,19 @@ export const Login = () => {
   });
 
   const loginHandler = async () => {
-    const result = await loginUserWithCredentials(
-      loginCredentials.username,
-      loginCredentials.password
-    );
-    if (result) {
-      navigate(state?.from ? state.from : "/");
+    if (loginCredentials.username && loginCredentials.password) {
+      const result = await loginUserWithCredentials(
+        loginCredentials.username,
+        loginCredentials.password
+      );
+      if (result === true) {
+        navigate(state?.from ? state.from : "/");
+      }
+    } else {
+      setLoginCredentials({
+        ...loginCredentials,
+        msg: "Username is required & Password is required",
+      });
     }
   };
 
@@ -37,6 +44,7 @@ export const Login = () => {
           onChange={(e) =>
             setLoginCredentials(() => ({
               ...loginCredentials,
+              msg: "",
               username: e.target.value,
             }))
           }
@@ -55,6 +63,7 @@ export const Login = () => {
           onChange={(e) =>
             setLoginCredentials(() => ({
               ...loginCredentials,
+              msg: "",
               password: e.target.value,
             }))
           }
@@ -79,8 +88,11 @@ export const Login = () => {
         </button>
       </div>
       <h3>
-        {status && <img className='loading' src={Loading} alt={Loading} />}
+        {status.loading && (
+          <img className='loading' src={Loading} alt={Loading} />
+        )}
       </h3>
+      <p>{loginCredentials.msg}</p>
       <button className='btn btn-main' onClick={loginHandler}>
         Login
       </button>

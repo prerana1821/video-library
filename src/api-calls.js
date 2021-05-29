@@ -2,7 +2,10 @@ import axios from "axios";
 
 export const addVideoToLikedVideos = async (user, video, dispatch) => {
   try {
-    dispatch({ type: "STATUS", payload: "Adding video to liked videos" });
+    dispatch({
+      type: "STATUS",
+      payload: { loading: "Adding video to liked videos" },
+    });
     const response = await axios.post(
       `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/likedVideos`,
       {
@@ -16,10 +19,8 @@ export const addVideoToLikedVideos = async (user, video, dispatch) => {
   } catch (error) {
     dispatch({
       type: "STATUS",
-      payload: "Couldn't add video to liked videos..",
+      payload: { error: "Couldn't add video to liked videos.." },
     });
-  } finally {
-    dispatch({ type: "STATUS", payload: "" });
   }
 };
 
@@ -27,7 +28,7 @@ export const deleteVideoFromLikedVideos = async (user, video, dispatch) => {
   try {
     dispatch({
       type: "STATUS",
-      payload: "Removing video from liked videos....",
+      payload: { loading: "Removing video from liked videos...." },
     });
     const response = await axios.delete(
       `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/likedVideos/${video._id}`
@@ -39,10 +40,8 @@ export const deleteVideoFromLikedVideos = async (user, video, dispatch) => {
   } catch (error) {
     dispatch({
       type: "STATUS",
-      payload: "Couldn't remove video from liked videos..",
+      payload: { error: "Couldn't remove video from liked videos.." },
     });
-  } finally {
-    dispatch({ type: "STATUS", payload: "" });
   }
 };
 
@@ -60,6 +59,10 @@ export const addVideoToHistory = async (user, video, dispatch) => {
     }
   } catch (error) {
     console.log(error);
+    dispatch({
+      type: "STATUS",
+      payload: { error: "Couldn't add video to history.." },
+    });
   }
 };
 
@@ -67,7 +70,7 @@ export const deleteVideoFromHistory = async (user, video, dispatch) => {
   try {
     dispatch({
       type: "STATUS",
-      payload: "Removing video from history....",
+      payload: { loading: "Removing video from history...." },
     });
     const response = await axios.delete(
       `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/history/${video._id}`
@@ -80,10 +83,8 @@ export const deleteVideoFromHistory = async (user, video, dispatch) => {
     console.log(error);
     dispatch({
       type: "STATUS",
-      payload: "Couldn't remove video from history..",
+      payload: { error: "Couldn't remove video from history.." },
     });
-  } finally {
-    dispatch({ type: "STATUS", payload: "" });
   }
 };
 
@@ -91,7 +92,7 @@ export const clearHistory = async (user, dispatch) => {
   try {
     dispatch({
       type: "STATUS",
-      payload: "Clearing History..",
+      payload: { loading: "Clearing History.." },
     });
     const response = await axios.delete(
       `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/history`
@@ -104,16 +105,17 @@ export const clearHistory = async (user, dispatch) => {
     console.log(error);
     dispatch({
       type: "STATUS",
-      payload: "Couldn't clear history",
+      payload: { error: "Couldn't clear history" },
     });
-  } finally {
-    dispatch({ type: "STATUS", payload: "" });
   }
 };
 
 export const createPlayListFromApi = async (user, playlistTitle, dispatch) => {
   try {
-    dispatch({ type: "STATUS", payload: `Creating ${playlistTitle}` });
+    dispatch({
+      type: "STATUS",
+      payload: { loading: `Creating ${playlistTitle}` },
+    });
     const response = await axios.post(
       `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/playlists`,
       {
@@ -127,10 +129,8 @@ export const createPlayListFromApi = async (user, playlistTitle, dispatch) => {
   } catch (error) {
     dispatch({
       type: "STATUS",
-      payload: `Couldn't create ${playlistTitle}`,
+      payload: { error: `Couldn't create ${playlistTitle}` },
     });
-  } finally {
-    dispatch({ type: "STATUS", payload: "" });
   }
 };
 
@@ -138,7 +138,7 @@ export const deletePlaylistFromApi = async (user, playlist, dispatch) => {
   try {
     dispatch({
       type: "STATUS",
-      payload: `Removing ${playlist.title}....`,
+      payload: { loading: `Removing ${playlist.title}....` },
     });
     const response = await axios.delete(
       `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/playlists/${playlist._id}`
@@ -154,17 +154,18 @@ export const deletePlaylistFromApi = async (user, playlist, dispatch) => {
     console.log(error);
     dispatch({
       type: "STATUS",
-      payload: `Couldn't remove ${playlist.title}`,
+      payload: { error: `Couldn't remove ${playlist.title}` },
     });
-  } finally {
-    dispatch({ type: "STATUS", payload: "" });
   }
 };
 
 export const addVideoToPlaylist = async (user, playlist, video, dispatch) => {
   console.log(playlist);
   try {
-    dispatch({ type: "STATUS", payload: `Adding video to ${playlist.title}` });
+    dispatch({
+      type: "STATUS",
+      payload: { loading: `Adding video to ${playlist.title}` },
+    });
     const response = await axios.post(
       `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/playlists/${playlist._id}`,
       {
@@ -186,10 +187,8 @@ export const addVideoToPlaylist = async (user, playlist, video, dispatch) => {
   } catch (error) {
     dispatch({
       type: "STATUS",
-      payload: `Couldn't add video to ${playlist.title}..`,
+      payload: { error: `Couldn't add video to ${playlist.title}..` },
     });
-  } finally {
-    dispatch({ type: "STATUS", payload: "" });
   }
 };
 
@@ -203,7 +202,7 @@ export const deleteVideoFromPlaylist = async (
     console.log("play", { playlist });
     dispatch({
       type: "STATUS",
-      payload: `Removing video from ${playlist.title}`,
+      payload: { loading: `Removing video from ${playlist.title}` },
     });
     const response = await axios.delete(
       `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/playlists/${playlist._id}/${video._id}`
@@ -218,16 +217,14 @@ export const deleteVideoFromPlaylist = async (
   } catch (error) {
     dispatch({
       type: "STATUS",
-      payload: `Couldn't add video to ${playlist.title}`,
+      payload: { error: `Couldn't add video to ${playlist.title}` },
     });
-  } finally {
-    dispatch({ type: "STATUS", payload: "" });
   }
 };
 
 export const addNoteToVideo = async (user, note, videoId, dispatch) => {
   try {
-    dispatch({ type: "STATUS", payload: "Adding note" });
+    dispatch({ type: "STATUS", payload: { loading: "Adding note" } });
     const response = await axios.post(
       `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/notes/${videoId}`,
       {
@@ -239,9 +236,7 @@ export const addNoteToVideo = async (user, note, videoId, dispatch) => {
       dispatch({ type: "ADD_NOTE", payload: response.data.note });
     }
   } catch (error) {
-    dispatch({ type: "STATUS", payload: "Couldn't add note.." });
-  } finally {
-    dispatch({ type: "STATUS", payload: "" });
+    dispatch({ type: "STATUS", payload: { error: "Couldn't add note.." } });
   }
 };
 
@@ -253,7 +248,7 @@ export const updateNoteOfVideo = async (
   dispatch
 ) => {
   try {
-    dispatch({ type: "STATUS", payload: "Updating note...." });
+    dispatch({ type: "STATUS", payload: { loading: "Updating note...." } });
     const response = await axios.post(
       `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/notes/${videoId}/${note._id}`,
       {
@@ -265,8 +260,6 @@ export const updateNoteOfVideo = async (
       dispatch({ type: "SAVE_NOTE", payload: response.data.note });
     }
   } catch (error) {
-    dispatch({ type: "STATUS", payload: "Couldn't update note..." });
-  } finally {
-    dispatch({ type: "STATUS", payload: "" });
+    dispatch({ type: "STATUS", payload: { error: "Couldn't update note..." } });
   }
 };

@@ -6,7 +6,7 @@ import { SavedVideos } from "./SavedVideos";
 import { PlayList } from "./Playlist";
 import { Video } from "./Videos";
 import { History } from "./History";
-import { Login, PrivateRoute, SignUp } from "./Auth";
+import { Login, PrivateRoute, SignUp, useAuth } from "./Auth";
 import { Account } from "./Auth/Account";
 import { useData, useUserDetails } from "./Context";
 import { Toast } from "./Toast";
@@ -16,6 +16,7 @@ import "./App.css";
 function App() {
   const { userDetailsState } = useUserDetails();
   const { loading } = useData();
+  const { status } = useAuth();
 
   return (
     <div className='App' id='top'>
@@ -38,7 +39,17 @@ function App() {
             element={<SavedVideos />}
           ></PrivateRoute>
         </Routes>
-        {(userDetailsState?.loading || loading) && <Toast />}
+        {(userDetailsState?.loading.loading ||
+          loading.error ||
+          status.error ||
+          status.success) && (
+          <Toast
+            userDetailsStateLoading={userDetailsState?.loading.loading}
+            loadingError={loading.error}
+            statusError={status.error}
+            statusSuccess={status.success}
+          />
+        )}
         <BottomToTop />
       </div>
     </div>
