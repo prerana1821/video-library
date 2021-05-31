@@ -78,7 +78,6 @@ export const AuthProvider = ({ children }) => {
       if (!error.success) {
         setStatus({ error: error.response.data.errorMessage });
       }
-      return setStatus({ error: "Something went wrong!" });
     }
   };
 

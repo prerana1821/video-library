@@ -3,7 +3,7 @@ import "./Filters.css";
 import Loading from "./../images/loading.svg";
 
 export const Filters = () => {
-  const { data, latestVideos, dispatch, loading } = useData();
+  const { data, latestVideos, dispatch, status } = useData();
   const categories = [...new Set(data.map((item) => item.category))];
 
   return (
@@ -12,7 +12,7 @@ export const Filters = () => {
         <div>
           <ul className='categories'>
             <div>
-              {loading.loading && (
+              {status.loading && (
                 <img className='loading' src={Loading} alt={Loading} />
               )}
             </div>

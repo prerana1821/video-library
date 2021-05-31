@@ -15,7 +15,7 @@ import "./App.css";
 
 function App() {
   const { userDetailsState } = useUserDetails();
-  const { loading } = useData();
+  const { status: dataStatus } = useData();
   const { status } = useAuth();
 
   return (
@@ -39,13 +39,13 @@ function App() {
             element={<SavedVideos />}
           ></PrivateRoute>
         </Routes>
-        {(userDetailsState?.loading.loading ||
-          loading.error ||
+        {(userDetailsState?.status.loading ||
+          dataStatus.error ||
           status.error ||
           status.success) && (
           <Toast
-            userDetailsStateLoading={userDetailsState?.loading.loading}
-            loadingError={loading.error}
+            userDetailsStateLoading={userDetailsState?.status.loading}
+            loadingError={dataStatus.error}
             statusError={status.error}
             statusSuccess={status.success}
           />

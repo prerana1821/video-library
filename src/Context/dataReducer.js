@@ -5,7 +5,7 @@ export const dataReducer = (state, action) => {
     case "STATUS":
       return {
         ...state,
-        loading: action.payload,
+        status: action.payload,
       };
     case "VIEW_BY_CATEGORY":
       return { ...state, viewByCategory: action.payload };

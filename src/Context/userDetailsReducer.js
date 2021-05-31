@@ -2,14 +2,14 @@ export const userDetailsReducer = (state, action) => {
   switch (action.type) {
     case "ADD_USER_DATA":
       return {
-        loading: "",
+        status: { loading: "", success: "", error: "" },
         likedVideos: action.payload.likedVideos,
         history: action.payload.history,
         notes: action.payload.notes,
         playlists: action.payload.playlists,
       };
     case "STATUS":
-      return { ...state, loading: action.payload };
+      return { ...state, status: action.payload };
     case "LIKE_VIDEO":
       return {
         ...state,

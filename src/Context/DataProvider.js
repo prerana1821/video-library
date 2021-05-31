@@ -37,14 +37,14 @@ export const DataProvider = ({ children }) => {
   }, []);
 
   const [
-    { latestVideos, viewByCategory, searchString, loading, data },
+    { latestVideos, viewByCategory, searchString, status, data },
     dispatch,
   ] = useReducer(dataReducer, {
     data: [],
     latestVideos: false,
     viewByCategory: "",
     searchString: "",
-    loading: { loading: "", success: "", error: "" },
+    status: { loading: "", success: "", error: "" },
   });
 
   const searchedData = getSearchedData(data, searchString);
@@ -55,7 +55,7 @@ export const DataProvider = ({ children }) => {
     <DataContext.Provider
       value={{
         data,
-        loading,
+        status,
         searchString,
         latestVideos,
         categoryData,

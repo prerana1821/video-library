@@ -23,12 +23,7 @@ export const History = () => {
         <div>
           <button
             className='btn sec-pink'
-            onClick={() =>
-              // userDetailsDispatch({
-              //   type: "CLEAR_HISTORY",
-              // })
-              clearHistory(user, userDetailsDispatch)
-            }
+            onClick={() => clearHistory(user, userDetailsDispatch)}
           >
             Clear All History
           </button>
@@ -50,10 +45,6 @@ export const History = () => {
                         className='btn-icon'
                         onClick={(e) => {
                           e.preventDefault();
-                          // userDetailsDispatch({
-                          //   type: "REMOVE_FROM_HISTORY",
-                          //   payload: video,
-                          // });
                           deleteVideoFromHistory(
                             user,
                             video,

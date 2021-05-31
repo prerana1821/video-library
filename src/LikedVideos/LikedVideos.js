@@ -41,10 +41,6 @@ export const LikedVideos = () => {
                           video,
                           userDetailsDispatch
                         );
-                        // userDetailsDispatch({
-                        //   type: "UNLIKE_VIDEO",
-                        //   payload: video,
-                        // });
                       }}
                     >
                       <i className='fas  fa-2x fa-thumbs-down'></i>

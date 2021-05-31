@@ -46,10 +46,6 @@ export const PlayList = () => {
                 <button
                   className='btn-icon'
                   onClick={() =>
-                    // userDetailsDispatch({
-                    //   type: "DELETE_PLAYLIST",
-                    //   payload: playList,
-                    // })
                     deletePlaylistFromApi(user, playList, userDetailsDispatch)
                   }
                 >
