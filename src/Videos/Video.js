@@ -38,7 +38,7 @@ export const Video = () => {
   const [editNote, setEditNote] = useState(true);
   const [showNote, setShowNote] = useState(false);
   const [inputText, setInputText] = useState(defaultNoteState);
-  const { user, login } = useAuth();
+  const { user, token } = useAuth();
   const [showModal, setShowModal] = useState(false);
 
   const loginAlert = (msg) => {
@@ -78,7 +78,7 @@ export const Video = () => {
               <button
                 className='btn save-playlist-btn'
                 onClick={
-                  login
+                  token
                     ? () => {
                         setAddToPlaylistModal(!addToPlaylistModal);
                       }
@@ -93,7 +93,7 @@ export const Video = () => {
             <button
               className='btn-card-actions'
               onClick={
-                login
+                token
                   ? () => {
                       userDetailsState.playlists.reduce((acc, value) => {
                         return value.title === "Watch Later" &&
@@ -113,13 +113,13 @@ export const Video = () => {
               }
             >
               <div className='avatar av-sm av-pink'>
-                <i className={saveUnSave(video, userDetailsState, login)}></i>
+                <i className={saveUnSave(video, userDetailsState, token)}></i>
               </div>
             </button>
             <button
               className='btn-card-actions'
               onClick={
-                login
+                token
                   ? () => {
                       userDetailsState.likedVideos.reduce((acc, value) => {
                         return value.videoId._id === video._id
@@ -137,13 +137,13 @@ export const Video = () => {
               }
             >
               <div className='avatar av-sm av-pink'>
-                <i className={likeUnLike(video, userDetailsState, login)}></i>
+                <i className={likeUnLike(video, userDetailsState, token)}></i>
               </div>
             </button>
             <button
               className='avatar av-sm av-pink btn'
               onClick={
-                login
+                token
                   ? () => {
                       setShowNote(!showNote);
                     }

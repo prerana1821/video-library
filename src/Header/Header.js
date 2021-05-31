@@ -8,7 +8,7 @@ export const Header = () => {
   const { dispatch, searchString } = useData();
   const [inputSearch, setInputSearch] = useState("");
   const [toggle, setToggle] = useState(true);
-  const { login } = useAuth();
+  const { token } = useAuth();
 
   return (
     <div>
@@ -117,12 +117,12 @@ export const Header = () => {
             <li className='nav-item'>
               <NavLink
                 className='nav-link'
-                to={login ? "/account" : "/login"}
+                to={token ? "/account" : "/login"}
                 activeStyle={{
                   color: "var(--dk-pink)",
                 }}
               >
-                {login ? "Account" : "Login"}
+                {token ? "Account" : "Login"}
               </NavLink>
             </li>
           </ul>

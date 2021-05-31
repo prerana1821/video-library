@@ -6,14 +6,14 @@ import axios from "axios";
 export const UserDetailsContext = createContext();
 
 export const UserDetailsProvider = ({ children }) => {
-  const { login, user } = useAuth();
+  const { token, user } = useAuth();
 
   useEffect(() => {
-    if (login) {
+    if (token) {
       (async () => {
         try {
           const response = await axios.get(
-            `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}`
+            `https://api-pretube.prerananawar1.repl.co/userDetails`
           );
           console.log({ response });
           const data = response.data.userDetails;
@@ -26,7 +26,7 @@ export const UserDetailsProvider = ({ children }) => {
         }
       })();
     }
-  }, [login, user]);
+  }, [token, user]);
 
   const [userDetailsState, userDetailsDispatch] = useReducer(
     userDetailsReducer,

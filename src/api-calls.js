@@ -7,7 +7,7 @@ export const addVideoToLikedVideos = async (user, video, dispatch) => {
       payload: { loading: "Adding video to liked videos" },
     });
     const response = await axios.post(
-      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/likedVideos`,
+      `https://api-pretube.prerananawar1.repl.co/userDetails/likedVideos`,
       {
         videoId: video._id,
       }
@@ -31,7 +31,7 @@ export const deleteVideoFromLikedVideos = async (user, video, dispatch) => {
       payload: { loading: "Removing video from liked videos...." },
     });
     const response = await axios.delete(
-      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/likedVideos/${video._id}`
+      `https://api-pretube.prerananawar1.repl.co/userDetails/likedVideos/${video._id}`
     );
     console.log({ response });
     if (response.status === 200) {
@@ -48,7 +48,7 @@ export const deleteVideoFromLikedVideos = async (user, video, dispatch) => {
 export const addVideoToHistory = async (user, video, dispatch) => {
   try {
     const response = await axios.post(
-      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/history`,
+      `https://api-pretube.prerananawar1.repl.co/userDetails/history`,
       {
         videoId: video._id,
       }
@@ -73,7 +73,7 @@ export const deleteVideoFromHistory = async (user, video, dispatch) => {
       payload: { loading: "Removing video from history...." },
     });
     const response = await axios.delete(
-      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/history/${video._id}`
+      `https://api-pretube.prerananawar1.repl.co/userDetails/history/${video._id}`
     );
     console.log({ response });
     if (response.status === 200) {
@@ -95,7 +95,7 @@ export const clearHistory = async (user, dispatch) => {
       payload: { loading: "Clearing History.." },
     });
     const response = await axios.delete(
-      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/history`
+      `https://api-pretube.prerananawar1.repl.co/userDetails/history`
     );
     console.log({ response });
     if (response.status === 200) {
@@ -117,7 +117,7 @@ export const createPlayListFromApi = async (user, playlistTitle, dispatch) => {
       payload: { loading: `Creating ${playlistTitle}` },
     });
     const response = await axios.post(
-      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/playlists`,
+      `https://api-pretube.prerananawar1.repl.co/userDetails/playlists`,
       {
         title: playlistTitle,
       }
@@ -141,7 +141,7 @@ export const deletePlaylistFromApi = async (user, playlist, dispatch) => {
       payload: { loading: `Removing ${playlist.title}....` },
     });
     const response = await axios.delete(
-      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/playlists/${playlist._id}`
+      `https://api-pretube.prerananawar1.repl.co/userDetails/playlists/${playlist._id}`
     );
     console.log({ response });
     if (response.status === 200) {
@@ -167,7 +167,7 @@ export const addVideoToPlaylist = async (user, playlist, video, dispatch) => {
       payload: { loading: `Adding video to ${playlist.title}` },
     });
     const response = await axios.post(
-      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/playlists/${playlist._id}`,
+      `https://api-pretube.prerananawar1.repl.co/userDetails/playlists/${playlist._id}`,
       {
         videos: [
           ...playlist.videos,
@@ -205,7 +205,7 @@ export const deleteVideoFromPlaylist = async (
       payload: { loading: `Removing video from ${playlist.title}` },
     });
     const response = await axios.delete(
-      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/playlists/${playlist._id}/${video._id}`
+      `https://api-pretube.prerananawar1.repl.co/userDetails/playlists/${playlist._id}/${video._id}`
     );
     console.log({ response });
     if (response.status === 200) {
@@ -226,7 +226,7 @@ export const addNoteToVideo = async (user, note, videoId, dispatch) => {
   try {
     dispatch({ type: "STATUS", payload: { loading: "Adding note" } });
     const response = await axios.post(
-      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/notes/${videoId}`,
+      `https://api-pretube.prerananawar1.repl.co/userDetails/notes/${videoId}`,
       {
         note: note,
       }
@@ -250,7 +250,7 @@ export const updateNoteOfVideo = async (
   try {
     dispatch({ type: "STATUS", payload: { loading: "Updating note...." } });
     const response = await axios.post(
-      `https://api-pretube.prerananawar1.repl.co/userDetails/${user._id}/notes/${videoId}/${note._id}`,
+      `https://api-pretube.prerananawar1.repl.co/userDetails/notes/${videoId}/${note._id}`,
       {
         note: noteText,
       }

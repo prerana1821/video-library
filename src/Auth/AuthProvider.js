@@ -4,8 +4,37 @@ import axios from "axios";
 
 export const AuthContext = createContext();
 
+export const setupAuthHeaderForServiceCalls = (token) => {
+  if (token) {
+    return (axios.defaults.headers.common["Authorization"] = token);
+  }
+  delete axios.defaults.headers.common["Authorization"];
+};
+
+export const setupAuthExceptionHandler = (logoutUser, navigate) => {
+  const UNAUTHORIZED = 401;
+  axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error?.response?.status === UNAUTHORIZED) {
+        logoutUser();
+        console.log("here");
+        navigate("login");
+      }
+      return Promise.reject(error);
+    }
+  );
+};
+
 export const AuthProvider = ({ children }) => {
-  const [login, setLogin] = useState(false);
+  // const [login, setLogin] = useState(false);
+  const { token: savedToken } = JSON.parse(localStorage?.getItem("token")) || {
+    token: null,
+  };
+  if (savedToken) {
+    setupAuthHeaderForServiceCalls(savedToken);
+  }
+  const [token, setToken] = useState(savedToken);
   const [user, setUser] = useState({
     _id: "",
     username: "",
@@ -15,14 +44,15 @@ export const AuthProvider = ({ children }) => {
   const [status, setStatus] = useState({ loading: "", success: "", error: "" });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loginFromApi = JSON.parse(localStorage?.getItem("login"));
-    loginFromApi?.login && setLogin(true);
-  }, []);
+  // useEffect(() => {
+  //   const loginFromApi = JSON.parse(localStorage?.getItem("login"));
+  //   loginFromApi?.login && setLogin(true);
+  // }, []);
 
   useEffect(() => {
     const userFromApi = JSON.parse(localStorage?.getItem("user"));
     userFromApi?._id && setUser({ ...userFromApi });
+    setupAuthExceptionHandler(logout, navigate);
   }, []);
 
   const loginUserWithCredentials = async (username, password) => {
@@ -38,8 +68,13 @@ export const AuthProvider = ({ children }) => {
       console.log({ response });
       if (response.data.success) {
         setUser(response.data.user);
-        setLogin(true);
-        localStorage?.setItem("login", JSON.stringify({ login: true }));
+        console.log(response.data.token);
+        localStorage?.setItem(
+          "token",
+          JSON.stringify({ token: response.data.token })
+        );
+        setToken(response.data.token);
+        setupAuthHeaderForServiceCalls(response.data.token);
         localStorage?.setItem("user", JSON.stringify(response.data.user));
         setStatus({ success: `Hello, login successful ${username}` });
       }
@@ -67,9 +102,14 @@ export const AuthProvider = ({ children }) => {
       console.log({ response });
       if (response.data.success) {
         setUser(response.data.user);
-        localStorage?.setItem("login", JSON.stringify({ login: true }));
+        console.log(response.data.token);
+        localStorage?.setItem(
+          "token",
+          JSON.stringify({ token: response.data.token })
+        );
+        setToken(response.data.token);
+        setupAuthHeaderForServiceCalls(response.data.token);
         localStorage?.setItem("user", JSON.stringify(response.data.user));
-        setLogin(true);
         setStatus({ success: `Hurray! Signup Successful ${username}` });
       }
       return response.data.success;
@@ -82,7 +122,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setLogin(false);
+    setToken("");
     setStatus({ loading: "", success: "", error: "" });
     setUser({
       _id: "",
@@ -90,7 +130,7 @@ export const AuthProvider = ({ children }) => {
       email: "",
       password: "",
     });
-    localStorage?.removeItem("login");
+    localStorage?.removeItem("token");
     localStorage?.removeItem("user");
     navigate("/");
   };
@@ -99,7 +139,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        login,
+        token,
         status,
         setStatus,
         signUpUserWithCredentials,

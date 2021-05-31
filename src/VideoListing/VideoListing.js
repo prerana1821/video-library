@@ -15,7 +15,7 @@ import { getWatchLaterPlayList, saveUnSave } from "../utils/viewOperations";
 export const VideoListing = () => {
   const { categoryData } = useData();
   const { userDetailsState, userDetailsDispatch } = useUserDetails();
-  const { login, user } = useAuth();
+  const { token, user } = useAuth();
   const [showModal, setShowModal] = useState(false);
 
   const loginAlert = (msg) => {
@@ -47,7 +47,7 @@ export const VideoListing = () => {
                   <button
                     className='btn-card-actions'
                     onClick={
-                      login
+                      token
                         ? (e) => {
                             e.stopPropagation();
                             e.preventDefault();
@@ -76,7 +76,7 @@ export const VideoListing = () => {
                   >
                     <div className='avatar av-sm av-pink'>
                       <i
-                        className={saveUnSave(video, userDetailsState, login)}
+                        className={saveUnSave(video, userDetailsState, token)}
                       ></i>
                     </div>
                   </button>
