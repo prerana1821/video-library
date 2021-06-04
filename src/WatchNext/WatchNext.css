@@ -1,0 +1,21 @@
+.watch-next-img {
+  max-width: 250px;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+.watch-next-card {
+  display: flex;
+  margin: 1rem 1rem 0 0;
+  text-align: left;
+  gap: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--secondary-box-shadow);
+  padding: 1rem 0 1rem 1rem;
+  max-width: 560px;
+}
+
+.watch-next-desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
